@@ -1,0 +1,5 @@
+Problems in tutorial :
+
+Semantics of rules : "suppose the following annotated disjunction" and "without a body as follows" have no formula.
+Higher-order functions has no examples
+Inhibition effects "this is can be achieved" and weird "None" example, "for a noisy-or gate" is not followed by example, "either p1 or p2" neither, ... (none of the examples are shown)
