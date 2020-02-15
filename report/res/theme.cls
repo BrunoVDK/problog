@@ -26,7 +26,7 @@
 \newboolean{anonymize}
 \DeclareOption{peerreview}{\setboolean{anonymize}{true}}
 \PassOptionsToClass{10pt,a4paper}{article}
-\PassOptionsToPackage{dutch}{babel}
+\PassOptionsToPackage{english}{babel}
 \PassOptionsToPackage{utf8}{inputenc}
 \PassOptionsToPackage{T1}{fontenc}
 \PassOptionsToPackage{a4paper}{geometry}
@@ -66,6 +66,12 @@
 \RequirePackage{totcount}
 \RequirePackage{lcg}
 \pagenumbering{arabic}
+
+% MINTED
+\usepackage[newfloat,cachedir=minted]{minted}
+\usepackage{caption}
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Code snippet}
 
 \newcommand{\fakesection}[1]{
 	\section*{#1}

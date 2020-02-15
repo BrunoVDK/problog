@@ -1,6 +1,5 @@
 \documentclass{res/theme}
 \usepackage{wallpaper}
-\usepackage[dutch]{babel}
 \usepackage{tabu,longtable,booktabs,array}
 \def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
 \let\endchangemargin=\endlist 
@@ -55,7 +54,6 @@ contents={
 \usepackage{rotating}
 \usepackage{epstopdf}
 \usepackage{fancyvrb}
-\usepackage{listings}
 \makeatletter
 \patchcmd{\@BVerbatim}
   {\BVerbatim@font}
@@ -83,10 +81,39 @@ contents={
 %%%
 \begin{document}
 \maketitle
+
+%
+% Introduction
+%
+\begin{center}
+\textit{Below's our solution for the assignment. Each question is answered in a section with the same title as that of the question's. The program used throughout is shown below.}
+\end{center}
+
+\vspace{0.5cm}
+\begin{code}
+\begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
+person(a). person(b). person(c). 
+0.2::stress(X) :- person(X). 
+0.1::friends(X,Y) :- person(X), person(Y). 
+0.3::smokes(X) :- stress(X). 
+0.4::smokes(X) :- friends(X,Y), smokes(Y). 
+query(smokes(a)).
+\end{minted}
+\captionof{listing}{\texttt{PROBLOG} code used throughout the assignment.}
+\label{code:base}
+\end{code}
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}
+\draw [dotted] (0,1) -- (15,1);
+\end{tikzpicture}
+\end{center}
+
+% Table of contents
 \tableofcontents
 
 %
-% Simuleren van sparen en beleggen
+% Probabilistic Inference
 % 
 \input{probabilistic_inference}
 
