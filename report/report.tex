@@ -81,15 +81,23 @@ contents={
 %%%
 \begin{document}
 \maketitle
+\tableofcontents
+
+\vspace{0.5cm}
+\begin{center}
+\begin{tikzpicture}
+\draw [dotted] (0,1) -- (15,1);
+\end{tikzpicture}
+\end{center}
 
 %
 % Introduction
 %
 \begin{center}
-\textit{Below's our solution for the assignment. Each question is answered in a section with the same title as that of the question's. The program used throughout is shown below.}
+\textit{Below's our solution for the given challenges. The questions in each section of the original assignment are answered in a section with a corresponding title.}
 \end{center}
 
-\vspace{0.5cm}
+\vspace{0.2cm}
 \begin{code}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
 person(a). person(b). person(c). 
@@ -99,18 +107,9 @@ person(a). person(b). person(c).
 0.4::smokes(X) :- friends(X,Y), smokes(Y). 
 query(smokes(a)).
 \end{minted}
-\captionof{listing}{\texttt{PROBLOG} code used throughout the assignment.}
+\captionof{listing}{\texttt{PROBLOG} code used throughout.}
 \label{code:base}
 \end{code}
-\vspace{0.5cm}
-\begin{center}
-\begin{tikzpicture}
-\draw [dotted] (0,1) -- (15,1);
-\end{tikzpicture}
-\end{center}
-
-% Table of contents
-\tableofcontents
 
 %
 % Probabilistic Inference
