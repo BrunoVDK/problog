@@ -6,6 +6,47 @@
 
 \fakesubsection{SRL to CNF}
 
+First the program is grounded :
+
+\begin{code}
+\begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
+0.2::stress(a).
+0.2::stress(b).
+0.2::stress(c).
+
+0.1::friends(a,a).
+0.1::friends(a,b).
+0.1::friends(a,c).
+
+0.1::friends(b,a).
+0.1::friends(b,b).
+0.1::friends(b,c).
+
+0.1::friends(c,a).
+0.1::friends(c,b).
+0.1::friends(c,c).
+
+0.3::smokes(a) :- stress(a).
+0.3::smokes(b) :- stress(b).
+0.3::smokes(c) :- stress(c).
+
+0.4::smokes(a) :- friends(a,a), smokes(a).
+0.4::smokes(a) :- friends(a,b), smokes(b).
+0.4::smokes(a) :- friends(a,c), smokes(c).
+
+0.4::smokes(b) :- friends(b,a), smokes(a).
+0.4::smokes(b) :- friends(b,b), smokes(b).
+0.4::smokes(b) :- friends(b,c), smokes(c).
+
+0.4::smokes(c) :- friends(c,a), smokes(a).
+0.4::smokes(c) :- friends(c,b), smokes(b).
+0.4::smokes(c) :- friends(c,c), smokes(c).
+\end{minted}
+\captionof{listing}{Relevant ground program.}
+\label{code:base}
+\end{code}
+
+\newpage\noindent Then this ground program is converted to a boolean formula :
 
 
 %%%
