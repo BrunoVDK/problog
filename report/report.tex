@@ -54,6 +54,8 @@ contents={
 \usepackage{rotating}
 \usepackage{epstopdf}
 \usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{amssymb}
 \makeatletter
 \patchcmd{\@BVerbatim}
   {\BVerbatim@font}
@@ -100,7 +102,9 @@ contents={
 \vspace{0.2cm}
 \begin{code}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
-person(a). person(b). person(c). 
+person(a). 
+person(b). 
+person(c). 
 0.2::stress(X) :- person(X). 
 0.1::friends(X,Y) :- person(X), person(Y). 
 0.3::smokes(X) :- stress(X). 

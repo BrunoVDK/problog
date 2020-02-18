@@ -6,7 +6,7 @@
 
 \fakesubsection{SRL to CNF}
 
-First the program is grounded :
+First the program is grounded. This is a matter of collecting all atoms involved in all proofs of the query.
 
 \begin{code}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
@@ -33,7 +33,6 @@ First the program is grounded :
 0.4::smokes(a) :- friends(a,a), smokes(a).
 0.4::smokes(a) :- friends(a,b), smokes(b).
 0.4::smokes(a) :- friends(a,c), smokes(c).
-
 0.4::smokes(b) :- friends(b,a), smokes(a).
 0.4::smokes(b) :- friends(b,b), smokes(b).
 0.4::smokes(b) :- friends(b,c), smokes(c).
@@ -44,9 +43,106 @@ First the program is grounded :
 \end{minted}
 \captionof{listing}{Relevant ground program.}
 \label{code:base}
+\vspace{0.5cm}
 \end{code}
 
-\newpage\noindent Then this ground program is converted to a boolean formula :
+\noindent The proofs of the query make for the following (nested) trie, where colourings indicate the presence of loops :
+
+\definecolor{darkgray}{rgb}{0.4,0.4,0.4}
+\definecolor{c1}{rgb}{0.83,0.13,0.18}
+\definecolor{c2}{rgb}{0.23,0.48,0.34}
+\definecolor{c3}{rgb}{0.18,0.35,0.58}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+
+	\node at (0,0) (1) {\texttt{\textcolor{c1}{smokes(a)}}};
+	
+	\node at (0,-2) (2) {\texttt{stress(a)}};
+	\node at (0,-4) (6) {\texttt{stress(b)}};
+	\node at (0,-6) (7) {\texttt{stress(c)}};
+	
+	\node at (4,-2) (3) {\texttt{friends(a,a),\textcolor{c1}{smokes(a)}}};
+	\node at (7,-3) (4) {\texttt{friends(a,b),\textcolor{c2}{smokes(b)}}};
+	\node at (10,-4) (5) {\texttt{friends(a,c),\textcolor{c3}{smokes(c)}}};
+	
+	\node at (4,-5) (8) {\texttt{friends(b,a),\textcolor{c1}{smokes(a)}}};
+	\node at (4,-6) (9) {\texttt{friends(b,b),\textcolor{c2}{smokes(b)}}};
+	\node at (4,-7) (10) {\texttt{friends(b,c),\textcolor{c3}{smokes(c)}}};
+	
+	\node at (7,-8) (11) {\texttt{friends(c,a),\textcolor{c1}{smokes(a)}}};
+	\node at (7,-9) (12) {\texttt{friends(c,b),\textcolor{c2}{smokes(b)}}};
+	\node at (7,-10) (13) {\texttt{friends(c,c),\textcolor{c3}{smokes(c)}}};
+	
+	\draw[darkgray,->] (1.south) to (2.north);
+	
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](3.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](4.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](5.north);
+	
+	\draw[darkgray,->] (4.west) to [out=180,in=90,looseness=0.5](6.north);
+	\draw[darkgray,->] (5.west) to [out=180,in=90,looseness=0.5](7.north);
+	
+	\draw[darkgray,->] (4.south) to [out=-90,in=0,looseness=0.5](8.east);
+	\draw[darkgray,->] (4.south) to [out=-90,in=0,looseness=0.5](9.east);
+	\draw[darkgray,->] (4.south) to [out=-90,in=0,looseness=0.5](10.east);
+	
+	\draw[darkgray,->] (5.south) to [out=-90,in=0,looseness=0.5](11.east);
+	\draw[darkgray,->] (5.south) to [out=-90,in=0,looseness=0.5](12.east);
+	\draw[darkgray,->] (5.south) to [out=-90,in=0,looseness=0.5](13.east);
+	
+	% Loops
+	
+	%\draw[->,dashed,blue] ([xshift=-4mm]3.north) to ([xshift=4mm]1.south);
+%	
+%	\draw[->,dashed,blue] ([xshift=-4mm]8.north) to ([xshift=4mm,looseness=0.5]1.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]9.east) to ([xshift=4mm,looseness=0.5]4.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]10.east) to ([xshift=4mm,looseness=0.5]5.south);
+%	
+%	\draw[->,dashed,blue] ([xshift=-4mm]11.east) to ([xshift=4mm,looseness=0.5]1.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]12.east) to ([xshift=4mm,looseness=0.5]4.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]13.east) to ([xshift=4mm,looseness=0.5]5.south);
+	
+%	\node at (-2.5,5) (3) {$\mathbb{N}$};
+%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=15] node[left]{$id$} (3);
+%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=30] node[left]{$add1mod3$} (3);
+%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=45] node[left]{$add2mod3$} (3);
+\end{tikzpicture}
+\caption{SLG-tree produced while turning the ground program into a boolean formula. Coloured atoms refer to loops.}
+\label{fig:nestedtries}
+\end{figure}
+
+\noindent The loops can be removed while retaining the semantics through the use of auxiliary variables. For example :
+\begin{code}
+\begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
+0.2::stress(a).
+0.2::stress(b).
+0.2::stress(c).
+
+0.1::friends(a,b).
+0.1::friends(a,c).
+0.1::friends(b,c).
+0.1::friends(c,b).
+
+0.3::p(b).
+0.3::p(c).
+
+0.3::smokes(a) :- stress(a).
+smokes(b) :- stress(b), p(b).
+smokes(c) :- stress(c), p(c).
+
+0.4::smokes(a) :- friends(a,b), smokes(b).
+0.4::smokes(a) :- friends(a,c), smokes(c).
+0.4::smokes(b) :- friends(b,c), stress(c), p(c).
+0.4::smokes(c) :- friends(c,b), stress(b), p(b).
+
+query(smokes(a)).
+\end{minted}
+\captionof{listing}{Relevant ground program without cycles.}
+\label{code:base}
+\vspace{0.5cm}
+\end{code}
+
 
 
 %%%
