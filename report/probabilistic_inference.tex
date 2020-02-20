@@ -124,17 +124,17 @@ First the program is grounded. This is a matter of collecting all atoms involved
 0.1::friends(b,c).
 0.1::friends(c,b).
 
-0.3::p(b).
-0.3::p(c).
+0.3::p(b) :- stress(b).
+0.3::p(c) :- stress(c).
 
 0.3::smokes(a) :- stress(a).
-smokes(b) :- stress(b), p(b).
-smokes(c) :- stress(c), p(c).
+smokes(b) :- p(b).
+smokes(c) :- p(c).
 
 0.4::smokes(a) :- friends(a,b), smokes(b).
 0.4::smokes(a) :- friends(a,c), smokes(c).
-0.4::smokes(b) :- friends(b,c), stress(c), p(c).
-0.4::smokes(c) :- friends(c,b), stress(b), p(b).
+0.4::smokes(b) :- friends(b,c), p(c).
+0.4::smokes(c) :- friends(c,b), p(b).
 
 query(smokes(a)).
 \end{minted}
@@ -143,7 +143,58 @@ query(smokes(a)).
 \vspace{0.5cm}
 \end{code}
 
-
+\noindent This is equivalent to the given propositional formula :\\
+$smokes(a) \leftrightarrow stress(a) \lor (friends(a,b) \land smokes(b)) \lor (friends(a,c) \land smokes(c))\\
+\land (smokes(b) \leftrightarrow p(b) \lor (friends(b,c) \land p(c)))\\
+\land (smokes(c) \leftrightarrow p(c) \lor (friends(c,b) \land p(b)))\\
+\land (p(b) \leftrightarrow stress(b))\\
+\land (p(c) \leftrightarrow stress(c))$
+\vspace{0.2cm}
+\par\noindent Which, in \texttt{CNF} form, gives :\\
+$(\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor friends(a,c))
+\\\land (\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor smokes(c))
+\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor friends(a,c))
+\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor smokes(c))
+\\\land (\lnot stress(a) \lor smokes(a))
+\\\land (\lnot friends(a,b) \lor \lnot smokes(b) \lor smokes(a))
+\\\land (\lnot friends(a,c) \lor \lnot smokes(c) \lor smokes(a))
+\\\land (\lnot smokes(b) \lor p(b) \lor friends(b,c))
+\\\land (\lnot smokes(b) \lor p(b) \lor p(c))
+\\\land (\lnot p(b) \lor smokes(b))
+\\\land (\lnot friends(b,c) \lor \lnot p(c) \lor smokes(b))
+\\\land (\lnot smokes(c) \lor p(c) \lor friends(c,b))
+\\\land (\lnot smokes(c) \lor p(c) \lor p(b))
+\\\land (\lnot p(c) \lor smokes(c))
+\\\land (\lnot friends(c,b) \lor \lnot p(b) \lor smokes(c))
+\\\land (\lnot p(b) \lor stress(b)) 
+\\\land (\lnot stress(b) \lor p(b)) 
+\\\land (\lnot p(c) \lor stress(c)) 
+\\\land (\lnot stress(c) \lor p(c))$
+\vspace{0.2cm}
+\par\noindent As a weighted \texttt{CNF} we end up with the following weights :
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c}
+Atom & Weight \\
+\hline
+stress(a) & 0.2 \\
+$\lnot$stress(a) & 0.8 \\
+stress(b) & 0.2 \\
+$\lnot$stress(b) & 0.8 \\
+stress(c) & 0.2 \\
+$\lnot$stress(c) & 0.8 \\
+friends(a,b) & 0.1 \\
+$\lnot$friends(a,b) & 0.9 \\
+friends(a,c) & 0.1 \\
+$\lnot$friends(a,c) & 0.9 \\
+friends(b,c) & 0.1 \\
+$\lnot$friends(b,c) & 0.9 \\
+friends(c,b) & 0.1 \\
+$\lnot$friends(c,b) & 0.9 \\
+\end{tabular}
+\caption{Weights for the \texttt{CNF}.}
+\label{tab:wcnf}
+\end{table}
 
 %%%
 %%%
