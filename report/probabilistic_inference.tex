@@ -9,6 +9,7 @@
 First the program is grounded. This is a matter of collecting all atoms involved in all proofs of the query.
 
 \begin{code}
+\begin{multicols}{2}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
 0.2::stress(a).
 0.2::stress(b).
@@ -41,6 +42,7 @@ First the program is grounded. This is a matter of collecting all atoms involved
 0.4::smokes(c) :- friends(c,b), smokes(b).
 0.4::smokes(c) :- friends(c,c), smokes(c).
 \end{minted}
+\end{multicols}
 \captionof{listing}{Relevant ground program.}
 \label{code:base}
 \vspace{0.5cm}
@@ -52,7 +54,7 @@ First the program is grounded. This is a matter of collecting all atoms involved
 \definecolor{c1}{rgb}{0.83,0.13,0.18}
 \definecolor{c2}{rgb}{0.23,0.48,0.34}
 \definecolor{c3}{rgb}{0.18,0.35,0.58}
-\begin{figure}[h]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 
@@ -114,6 +116,7 @@ First the program is grounded. This is a matter of collecting all atoms involved
 
 \noindent The loops can be removed while retaining the semantics through the use of auxiliary variables. For example :
 \begin{code}
+\begin{multicols}{2}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
 0.2::stress(a).
 0.2::stress(b).
@@ -138,6 +141,7 @@ smokes(c) :- p(c).
 
 query(smokes(a)).
 \end{minted}
+\end{multicols}
 \captionof{listing}{Relevant ground program without cycles.}
 \label{code:base}
 \vspace{0.5cm}
