@@ -9,7 +9,6 @@
 First the program is grounded. This is a matter of collecting all atoms involved in all proofs of the query.
 
 \begin{code}
-\begin{multicols}{2}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
 0.2::stress(a).
 0.2::stress(b).
@@ -42,21 +41,18 @@ First the program is grounded. This is a matter of collecting all atoms involved
 0.4::smokes(c) :- friends(c,b), smokes(b).
 0.4::smokes(c) :- friends(c,c), smokes(c).
 \end{minted}
-\end{multicols}
 \captionof{listing}{Relevant ground program.}
 \label{code:base}
 \vspace{0.5cm}
 \end{code}
 
-\noindent The proofs of the query make for the following (nested) trie, where colourings indicate the presence of loops :
-
 \definecolor{darkgray}{rgb}{0.4,0.4,0.4}
 \definecolor{c1}{rgb}{0.83,0.13,0.18}
 \definecolor{c2}{rgb}{0.23,0.48,0.34}
 \definecolor{c3}{rgb}{0.18,0.35,0.58}
-\begin{figure}[H]
+\begin{figure*}[h]
 \centering
-\begin{tikzpicture}
+\begin{tikzpicture}[scale=0.85]
 
 	\node at (0,0) (1) {\texttt{\textcolor{c1}{smokes(a)}}};
 	
@@ -65,8 +61,8 @@ First the program is grounded. This is a matter of collecting all atoms involved
 	\node at (0,-6) (7) {\texttt{stress(c)}};
 	
 	\node at (4,-2) (3) {\texttt{friends(a,a),\textcolor{c1}{smokes(a)}}};
-	\node at (7,-3) (4) {\texttt{friends(a,b),\textcolor{c2}{smokes(b)}}};
-	\node at (10,-4) (5) {\texttt{friends(a,c),\textcolor{c3}{smokes(c)}}};
+	\node at (8,-3) (4) {\texttt{friends(a,b),\textcolor{c2}{smokes(b)}}};
+	\node at (12,-4) (5) {\texttt{friends(a,c),\textcolor{c3}{smokes(c)}}};
 	
 	\node at (4,-5) (8) {\texttt{friends(b,a),\textcolor{c1}{smokes(a)}}};
 	\node at (4,-6) (9) {\texttt{friends(b,b),\textcolor{c2}{smokes(b)}}};
@@ -85,13 +81,13 @@ First the program is grounded. This is a matter of collecting all atoms involved
 	\draw[darkgray,->] (4.west) to [out=180,in=90,looseness=0.5](6.north);
 	\draw[darkgray,->] (5.west) to [out=180,in=90,looseness=0.5](7.north);
 	
-	\draw[darkgray,->] (4.south) to [out=-90,in=0,looseness=0.5](8.east);
-	\draw[darkgray,->] (4.south) to [out=-90,in=0,looseness=0.5](9.east);
-	\draw[darkgray,->] (4.south) to [out=-90,in=0,looseness=0.5](10.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](8.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](9.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](10.east);
 	
-	\draw[darkgray,->] (5.south) to [out=-90,in=0,looseness=0.5](11.east);
-	\draw[darkgray,->] (5.south) to [out=-90,in=0,looseness=0.5](12.east);
-	\draw[darkgray,->] (5.south) to [out=-90,in=0,looseness=0.5](13.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](11.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](12.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](13.east);
 	
 	% Loops
 	
@@ -110,13 +106,13 @@ First the program is grounded. This is a matter of collecting all atoms involved
 %	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=30] node[left]{$add1mod3$} (3);
 %	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=45] node[left]{$add2mod3$} (3);
 \end{tikzpicture}
-\caption{SLG-tree produced while turning the ground program into a boolean formula. Coloured atoms refer to loops.}
+\caption{SLG-tree produced while turning the ground program into a boolean formula. Coloured atoms indicate the presence of cycles.}
 \label{fig:nestedtries}
-\end{figure}
+\end{figure*}
 
-\noindent The loops can be removed while retaining the semantics through the use of auxiliary variables. For example :
+\noindent The proofs of the query make for a trie as shown in figure \ref{fig:nestedtries}, where colourings indicate the presence of cycles. Any proof involving an atom \texttt{friends(X,X)} or \texttt{friends(Y,a)} (with $Y\in\{b,c\}$) is non-minimal and doesn't affect the final probability. These atoms are disregarded. For the remaining cycles (involving \texttt{friends(b,c)} and \texttt{friends(c,b)}) auxiliary variables can be used to obtain a cycle-free program :
+
 \begin{code}
-\begin{multicols}{2}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
 0.2::stress(a).
 0.2::stress(b).
@@ -127,34 +123,49 @@ First the program is grounded. This is a matter of collecting all atoms involved
 0.1::friends(b,c).
 0.1::friends(c,b).
 
-0.3::p(b) :- stress(b).
-0.3::p(c) :- stress(c).
+0.3::p(a).
+0.3::p(b).
+0.3::p(c).
 
-0.3::smokes(a) :- stress(a).
-smokes(b) :- p(b).
-smokes(c) :- p(c).
+0.4::p(a,b).
+0.4::p(a,c).
+0.4::p(b,c).
+0.4::p(c,b).
 
-0.4::smokes(a) :- friends(a,b), smokes(b).
-0.4::smokes(a) :- friends(a,c), smokes(c).
-0.4::smokes(b) :- friends(b,c), p(c).
-0.4::smokes(c) :- friends(c,b), p(b).
+smokes(a) :- stress(a), p(a).
+smokes(b) :- stress(b), p(b).
+smokes(c) :- stress(c), p(c).
+
+smokes(a) :- 
+    friends(a,b), smokes(b), p(a,b).
+smokes(a) :-
+    friends(a,c), smokes(c), p(a,c).
+smokes(b) :- 
+    friends(b,c), stress(c), p(c), p(b,c).
+smokes(c) :- 
+    friends(c,b), stress(b), p(b), p(c,b).
 
 query(smokes(a)).
 \end{minted}
-\end{multicols}
 \captionof{listing}{Relevant ground program without cycles.}
 \label{code:base}
 \vspace{0.5cm}
 \end{code}
 
-\noindent This is equivalent to the given propositional formula :\\
-$smokes(a) \leftrightarrow stress(a) \lor (friends(a,b) \land smokes(b)) \lor (friends(a,c) \land smokes(c))\\
-\land (smokes(b) \leftrightarrow p(b) \lor (friends(b,c) \land p(c)))\\
-\land (smokes(c) \leftrightarrow p(c) \lor (friends(c,b) \land p(b)))\\
-\land (p(b) \leftrightarrow stress(b))\\
-\land (p(c) \leftrightarrow stress(c))$
-\vspace{0.2cm}
-\par\noindent Which, in \texttt{CNF} form, gives :\\
+\noindent The above logic program is equivalent to the following propositional formula :
+\begin{center}
+\begin{tabular}{ll}
+$smokes(a)\leftrightarrow$ & $stress(a)$\\
+& $\lor\ (friends(a,b) \land smokes(b))$\\
+& $\lor\ (friends(a,c) \land smokes(c))$\\
+$\land\ (smokes(b)\leftrightarrow$ & $p(b) \lor (friends(b,c) \land p(c)))$ \\
+$\land\ (smokes(c)\leftrightarrow$ & $p(c) \lor (friends(c,b) \land p(b)))$ \\
+$\land\ (p(b)\leftrightarrow$ & $stress(b))$ \\
+$\land\ (p(c)\leftrightarrow$ & $stress(c))$ \\
+\end{tabular}
+\end{center}
+
+\par\noindent Which gives the following \texttt{CNF} :\vspace{0.3cm}\\
 $(\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor friends(a,c))
 \\\land (\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor smokes(c))
 \\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor friends(a,c))
@@ -174,10 +185,11 @@ $(\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor friends(a,c))
 \\\land (\lnot stress(b) \lor p(b)) 
 \\\land (\lnot p(c) \lor stress(c)) 
 \\\land (\lnot stress(c) \lor p(c))$
-\vspace{0.2cm}
-\par\noindent As a weighted \texttt{CNF} we end up with the following weights :
-\begin{table}[h]
-\centering
+\vspace{0.3cm}
+
+\par\noindent The probabilistic literals \texttt{CNF} are assigned weights (derived literals have a weight of 1) :
+
+\begin{center}
 \begin{tabular}{c|c}
 Atom & Weight \\
 \hline
@@ -196,9 +208,7 @@ $\lnot$friends(b,c) & 0.9 \\
 friends(c,b) & 0.1 \\
 $\lnot$friends(c,b) & 0.9 \\
 \end{tabular}
-\caption{Weights for the \texttt{CNF}.}
-\label{tab:wcnf}
-\end{table}
+\end{center}
 
 %%%
 %%%
@@ -221,4 +231,3 @@ $\lnot$friends(c,b) & 0.9 \\
 %%%
 
 \fakesubsection{Weighted Model Counting}
-

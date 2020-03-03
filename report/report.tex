@@ -97,7 +97,7 @@ contents={
 % Introduction
 %
 \begin{center}
-\textit{Below's our solution for the given challenges. The questions in each section of the original assignment are answered in a section with the same title.}
+\textit{Below's our solution for the given challenges. The questions in each section of the original assignment are answered in a section having the same title.}
 \end{center}
 
 \vspace{0.2cm}
@@ -112,9 +112,18 @@ person(c).
 0.4::smokes(X) :- friends(X,Y), smokes(Y). 
 query(smokes(a)).
 \end{minted}
-\captionof{listing}{\texttt{PROBLOG} program used throughout.}
+\captionof{listing}{\texttt{PROBLOG} program used throughout the first two chapters of the report.}
 \label{code:base}
 \end{code}
+
+\begin{center}
+\begin{tikzpicture}
+\draw [dotted] (0,1) -- (15,1);
+\end{tikzpicture}
+\end{center}
+
+\begin{multicols*}{2}
+\raggedcolumns
 
 %
 % Probabilistic Inference
@@ -130,6 +139,8 @@ query(smokes(a)).
 % Parameter Learning
 % 
 \input{parameter_learning}
+
+\end{multicols*}
 
 % 
 % References

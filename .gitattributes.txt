@@ -1,0 +1,2 @@
+*.pl linguist-language=Python
+*.tex linguist-language=Python
