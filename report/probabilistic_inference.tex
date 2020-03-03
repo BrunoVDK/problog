@@ -155,16 +155,19 @@ query(smokes(a)).
 \noindent The above logic program is equivalent to the following propositional formula :
 \begin{center}
 \begin{tabular}{ll}
-$smokes(a)\leftrightarrow$ & $stress(a)$\\
-& $\lor\ (friends(a,b) \land smokes(b))$\\
-& $\lor\ (friends(a,c) \land smokes(c))$\\
-$\land\ (smokes(b)\leftrightarrow$ & $p(b) \lor (friends(b,c) \land p(c)))$ \\
-$\land\ (smokes(c)\leftrightarrow$ & $p(c) \lor (friends(c,b) \land p(b)))$ \\
-$\land\ (p(b)\leftrightarrow$ & $stress(b))$ \\
-$\land\ (p(c)\leftrightarrow$ & $stress(c))$ \\
+$(smokes(a)\leftrightarrow$ & $(stress(a) \land p(a))$\\
+\multicolumn{2}{c}{$\lor\ (friends(a,b) \land smokes(b) \land p(a,b))$}\\
+\multicolumn{2}{c}{$\lor\ (friends(a,c) \land smokes(c) \land p(a,c)))$}\\
+\multicolumn{2}{c}{$\land$}\\
+$(smokes(b)\leftrightarrow$ & $(stress(b) \land p(b))$\\
+\multicolumn{2}{c}{$\lor\ (friends(b,c) \land stress(c) \land p(c) \land p(b,c)))$}\\
+\multicolumn{2}{c}{$\land$}\\
+$(smokes(c)\leftrightarrow$ & $(stress(c) \land p(c))$\\
+\multicolumn{2}{c}{$\lor\ (friends(c,b) \land stress(b) \land p(b) \land p(c,b)))$}\\
 \end{tabular}
 \end{center}
 
+\vspace{0.1cm}
 \par\noindent Which gives the following \texttt{CNF} :\vspace{0.3cm}\\
 $(\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor friends(a,c))
 \\\land (\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor smokes(c))
