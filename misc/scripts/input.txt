@@ -1,0 +1,4 @@
+
+
+Main_Exp : (smokesa <=> (stressa & pa) | (friendsab & smokesb & pab) | (friendsac & smokesc & pac)) & (smokesb <=> (stressb & pb) | (friendsbc & stressc & pb & pbc)) & (smokesc <=> (stressc & pb) | (friendscb & stressb & pb & pcb))
+
