@@ -168,7 +168,87 @@ $(smokes(c)\leftrightarrow$ & $(stress(c) \land p(c))$\\
 
 \vspace{0.1cm}
 \par\noindent Which yields the following \texttt{CNF} :\vspace{0.2cm}\\
+$
+(\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor friends(a,c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor smokes(c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor p(a,c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor friends(a,c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor smokes(c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor p(a,c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor p(a,b) \lor friends(a,c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor p(a,b) \lor smokes(c)) 
+\\\land (\lnot smokes(a) \lor stress(a) \lor p(a,b) \lor p(a,c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor friends(a,b) \lor friends(a,c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor friends(a,b) \lor smokes(c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor friends(a,b) \lor p(a,c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor smokes(b) \lor friends(a,c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor smokes(b) \lor smokes(c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor smokes(b) \lor p(a,c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor p(a,b) \lor friends(a,c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor p(a,b) \lor smokes(c)) 
+\\\land (\lnot smokes(a) \lor p(a) \lor p(a,b) \lor p(a,c)) 
+\\\land (\lnot stress(a) \lor \lnot p(a) \lor smokes(a)) 
+\\\land (\lnot friends(a,b) \lor \lnot smokes(b) \lor \lnot p(a,b) \lor smokes(a)) 
+\\\land (\lnot friends(a,c) \lor \lnot smokes(c) \lor \lnot p(a,c) \lor smokes(a)) 
+\\\land (\lnot smokes(b) \lor stress(b) \lor friends(b,c)) 
+\\\land (\lnot smokes(b) \lor stress(b) \lor stress(c)) 
+\\\land (\lnot smokes(b) \lor stress(b) \lor p(b)) 
+\\\land (\lnot smokes(b) \lor stress(b) \lor p(b)c) 
+\\\land (\lnot smokes(b) \lor p(b) \lor friends(b,c)) 
+\\\land (\lnot smokes(b) \lor p(b) \lor stress(c)) 
+\\\land (\lnot smokes(b) \lor p(b) \lor p(b)) 
+\\\land (\lnot smokes(b) \lor p(b) \lor p(b)c) 
+\\\land (\lnot stress(b) \lor \lnot p(b) \lor smokes(b)) 
+\\\land (\lnot friends(b,c) \lor \lnot stress(c) \lor \lnot p(b) \lor \lnot p(b)c \lor smokes(b)) 
+\\\land (\lnot smokes(c) \lor stress(c) \lor friends(c,b)) 
+\\\land (\lnot smokes(c) \lor stress(c) \lor stress(b)) 
+\\\land (\lnot smokes(c) \lor stress(c) \lor p(b)) 
+\\\land (\lnot smokes(c) \lor stress(c) \lor p(c,b)) 
+\\\land (\lnot smokes(c) \lor p(b) \lor friends(c,b)) 
+\\\land (\lnot smokes(c) \lor p(b) \lor stress(b)) 
+\\\land (\lnot smokes(c) \lor p(b) \lor p(b)) 
+\\\land (\lnot smokes(c) \lor p(b) \lor p(c,b)) 
+\\\land (\lnot stress(c) \lor \lnot p(b) \lor smokes(c)) 
+\\\land (\lnot friends(c,b) \lor \lnot stress(b) \lor \lnot p(b) \lor \lnot p(c,b) \lor smokes(c))
+$
+\vspace{0.3cm}
 
+\par\noindent The probabilistic literals \texttt{CNF} are assigned weights (derived literals get a weight of 1) :
+
+\begin{center}
+\begin{tabular}{c|c}
+Literal & Weight \\
+\hline
+stress(a) & 0.2 \\
+$\lnot$stress(a) & 0.8 \\
+stress(b) & 0.2 \\
+$\lnot$stress(b) & 0.8 \\
+stress(c) & 0.2 \\
+$\lnot$stress(c) & 0.8 \\
+friends(a,b) & 0.1 \\
+$\lnot$friends(a,b) & 0.9 \\
+friends(a,c) & 0.1 \\
+$\lnot$friends(a,c) & 0.9 \\
+friends(b,c) & 0.1 \\
+$\lnot$friends(b,c) & 0.9 \\
+friends(c,b) & 0.1 \\
+$\lnot$friends(c,b) & 0.9 \\
+p(a) & 0.3 \\
+$\lnot$p(a) & 0.7 \\
+p(b) & 0.3 \\
+$\lnot$p(b) & 0.7 \\
+p(c) & 0.3 \\
+$\lnot$p(c) & 0.7 \\
+p(a,b) & 0.4 \\
+$\lnot$p(a,b) & 0.6 \\
+p(a,c) & 0.4 \\
+$\lnot$p(a,c) & 0.6 \\
+p(b,c) & 0.4 \\
+$\lnot$p(b,c) & 0.6 \\
+p(c,b) & 0.4 \\
+$\lnot$p(c,b) & 0.6 \\
+\end{tabular}
+\end{center}
 
 %%%
 %%%
