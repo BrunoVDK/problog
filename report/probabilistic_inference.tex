@@ -29,7 +29,6 @@ First the program is grounded. This is a matter of collecting all atoms involved
 0.3::smokes(a) :- stress(a).
 0.3::smokes(b) :- stress(b).
 0.3::smokes(c) :- stress(c).
-
 0.4::smokes(a) :- friends(a,a), smokes(a).
 0.4::smokes(a) :- friends(a,b), smokes(b).
 0.4::smokes(a) :- friends(a,c), smokes(c).
@@ -110,7 +109,7 @@ First the program is grounded. This is a matter of collecting all atoms involved
 \label{fig:nestedtries}
 \end{figure*}
 
-\noindent The proofs of the query make for a trie as shown in figure \ref{fig:nestedtries}, where colourings indicate the presence of cycles. Any proof involving an atom \texttt{friends(X,X)} or \texttt{friends(Y,a)} (with $Y\in\{b,c\}$) is non-minimal and doesn't affect the final probability. These atoms are disregarded. For the remaining cycles (involving \texttt{friends(b,c)} and \texttt{friends(c,b)}) auxiliary variables can be used to obtain a cycle-free program :
+\noindent The proofs of the query make for a trie as shown in figure \ref{fig:nestedtries}, where colourings indicate the presence of cycles. Any proof involving an atom \texttt{friends(X,X)} or \texttt{friends(Y,a)} (with $Y\in\{b,c\}$) is non-minimal and doesn't affect the final probability. These atoms are disregarded. For the remaining cycles (involving \texttt{friends(b,c)} and \texttt{friends(c,b)}) auxiliary variables can be used to obtain a cycle-free program without intensional probabilistic facts :
 
 \begin{code}
 \begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
@@ -168,50 +167,8 @@ $(smokes(c)\leftrightarrow$ & $(stress(c) \land p(c))$\\
 \end{center}
 
 \vspace{0.1cm}
-\par\noindent Which gives the following \texttt{CNF} :\vspace{0.3cm}\\
-$(\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor friends(a,c))
-\\\land (\lnot smokes(a) \lor stress(a) \lor friends(a,b) \lor smokes(c))
-\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor friends(a,c))
-\\\land (\lnot smokes(a) \lor stress(a) \lor smokes(b) \lor smokes(c))
-\\\land (\lnot stress(a) \lor smokes(a))
-\\\land (\lnot friends(a,b) \lor \lnot smokes(b) \lor smokes(a))
-\\\land (\lnot friends(a,c) \lor \lnot smokes(c) \lor smokes(a))
-\\\land (\lnot smokes(b) \lor p(b) \lor friends(b,c))
-\\\land (\lnot smokes(b) \lor p(b) \lor p(c))
-\\\land (\lnot p(b) \lor smokes(b))
-\\\land (\lnot friends(b,c) \lor \lnot p(c) \lor smokes(b))
-\\\land (\lnot smokes(c) \lor p(c) \lor friends(c,b))
-\\\land (\lnot smokes(c) \lor p(c) \lor p(b))
-\\\land (\lnot p(c) \lor smokes(c))
-\\\land (\lnot friends(c,b) \lor \lnot p(b) \lor smokes(c))
-\\\land (\lnot p(b) \lor stress(b)) 
-\\\land (\lnot stress(b) \lor p(b)) 
-\\\land (\lnot p(c) \lor stress(c)) 
-\\\land (\lnot stress(c) \lor p(c))$
-\vspace{0.3cm}
+\par\noindent Which yields the following \texttt{CNF} :\vspace{0.2cm}\\
 
-\par\noindent The probabilistic literals \texttt{CNF} are assigned weights (derived literals have a weight of 1) :
-
-\begin{center}
-\begin{tabular}{c|c}
-Atom & Weight \\
-\hline
-stress(a) & 0.2 \\
-$\lnot$stress(a) & 0.8 \\
-stress(b) & 0.2 \\
-$\lnot$stress(b) & 0.8 \\
-stress(c) & 0.2 \\
-$\lnot$stress(c) & 0.8 \\
-friends(a,b) & 0.1 \\
-$\lnot$friends(a,b) & 0.9 \\
-friends(a,c) & 0.1 \\
-$\lnot$friends(a,c) & 0.9 \\
-friends(b,c) & 0.1 \\
-$\lnot$friends(b,c) & 0.9 \\
-friends(c,b) & 0.1 \\
-$\lnot$friends(c,b) & 0.9 \\
-\end{tabular}
-\end{center}
 
 %%%
 %%%
