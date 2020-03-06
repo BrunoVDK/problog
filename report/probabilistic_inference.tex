@@ -256,7 +256,19 @@ $\lnot$p(c,b) & 0.6 \\
 
 \fakesubsection{SRL to PGM}
 
-
+\begin{figure*}
+  \tikz{
+% nodes
+ \node[obs] (x) {$x$};%
+ \node[latent,above=of x,xshift=-1cm,fill] (y) {$y$}; %
+ \node[latent,above=of x,xshift=1cm] (z) {$z$}; %
+% plate
+% \plate [inner sep=.25cm,yshift=.2cm] {plate1} {(x)(y)(z)} {$N$}; %
+% edges
+ \edge {y,z} {x}  
+}
+\caption{Bayes network representation of the program.}
+\end{figure*}
 
 %%%
 %%%

@@ -542,5 +542,6 @@
 \fakelistoffigures
 }
 \endinput
+
 %%
 %% End of file `sareport.cls'.
