@@ -45,70 +45,6 @@ First the program is grounded. This is a matter of collecting all atoms involved
 \vspace{0.5cm}
 \end{code}
 
-\definecolor{darkgray}{rgb}{0.4,0.4,0.4}
-\definecolor{c1}{rgb}{0.83,0.13,0.18}
-\definecolor{c2}{rgb}{0.23,0.48,0.34}
-\definecolor{c3}{rgb}{0.18,0.35,0.58}
-\begin{figure*}[h]
-\centering
-\begin{tikzpicture}[scale=0.85]
-
-	\node at (0,0) (1) {\texttt{\textcolor{c1}{smokes(a)}}};
-	
-	\node at (0,-2) (2) {\texttt{stress(a)}};
-	\node at (0,-4) (6) {\texttt{stress(b)}};
-	\node at (0,-6) (7) {\texttt{stress(c)}};
-	
-	\node at (4,-2) (3) {\texttt{friends(a,a),\textcolor{c1}{smokes(a)}}};
-	\node at (8,-3) (4) {\texttt{friends(a,b),\textcolor{c2}{smokes(b)}}};
-	\node at (12,-4) (5) {\texttt{friends(a,c),\textcolor{c3}{smokes(c)}}};
-	
-	\node at (4,-5) (8) {\texttt{friends(b,a),\textcolor{c1}{smokes(a)}}};
-	\node at (4,-6) (9) {\texttt{friends(b,b),\textcolor{c2}{smokes(b)}}};
-	\node at (4,-7) (10) {\texttt{friends(b,c),\textcolor{c3}{smokes(c)}}};
-	
-	\node at (7,-8) (11) {\texttt{friends(c,a),\textcolor{c1}{smokes(a)}}};
-	\node at (7,-9) (12) {\texttt{friends(c,b),\textcolor{c2}{smokes(b)}}};
-	\node at (7,-10) (13) {\texttt{friends(c,c),\textcolor{c3}{smokes(c)}}};
-	
-	\draw[darkgray,->] (1.south) to (2.north);
-	
-	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](3.north);
-	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](4.north);
-	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](5.north);
-	
-	\draw[darkgray,->] (4.west) to [out=180,in=90,looseness=0.5](6.north);
-	\draw[darkgray,->] (5.west) to [out=180,in=90,looseness=0.5](7.north);
-	
-	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](8.east);
-	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](9.east);
-	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](10.east);
-	
-	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](11.east);
-	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](12.east);
-	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](13.east);
-	
-	% Loops
-	
-	%\draw[->,dashed,blue] ([xshift=-4mm]3.north) to ([xshift=4mm]1.south);
-%	
-%	\draw[->,dashed,blue] ([xshift=-4mm]8.north) to ([xshift=4mm,looseness=0.5]1.south);
-%	\draw[->,dashed,blue] ([xshift=-4mm]9.east) to ([xshift=4mm,looseness=0.5]4.south);
-%	\draw[->,dashed,blue] ([xshift=-4mm]10.east) to ([xshift=4mm,looseness=0.5]5.south);
-%	
-%	\draw[->,dashed,blue] ([xshift=-4mm]11.east) to ([xshift=4mm,looseness=0.5]1.south);
-%	\draw[->,dashed,blue] ([xshift=-4mm]12.east) to ([xshift=4mm,looseness=0.5]4.south);
-%	\draw[->,dashed,blue] ([xshift=-4mm]13.east) to ([xshift=4mm,looseness=0.5]5.south);
-	
-%	\node at (-2.5,5) (3) {$\mathbb{N}$};
-%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=15] node[left]{$id$} (3);
-%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=30] node[left]{$add1mod3$} (3);
-%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=45] node[left]{$add2mod3$} (3);
-\end{tikzpicture}
-\caption{SLG-tree produced while turning the ground program into a boolean formula. Coloured atoms indicate the presence of cycles.}
-\label{fig:nestedtries}
-\end{figure*}
-
 \noindent The proofs of the query make for a trie as shown in figure \ref{fig:nestedtries}, where colourings indicate the presence of cycles. Any proof involving an atom \texttt{friends(X,X)} or \texttt{friends(Y,a)} (with $Y\in\{b,c\}$) is non-minimal and doesn't affect the final probability. These atoms are disregarded. For the remaining cycles (involving \texttt{friends(b,c)} and \texttt{friends(c,b)}) auxiliary variables can be used to obtain a cycle-free program without intensional probabilistic facts :
 
 \begin{code}
@@ -249,6 +185,70 @@ p(c,b) & 0.4 \\
 $\lnot$p(c,b) & 0.6 \\
 \end{tabular}
 \end{center}
+
+\definecolor{darkgray}{rgb}{0.4,0.4,0.4}
+\definecolor{c1}{rgb}{0.83,0.13,0.18}
+\definecolor{c2}{rgb}{0.23,0.48,0.34}
+\definecolor{c3}{rgb}{0.18,0.35,0.58}
+\begin{figure*}
+\centering
+\begin{tikzpicture}[scale=0.85]
+
+	\node at (0,0) (1) {\texttt{\textcolor{c1}{smokes(a)}}};
+	
+	\node at (0,-2) (2) {\texttt{stress(a)}};
+	\node at (0,-4) (6) {\texttt{stress(b)}};
+	\node at (0,-6) (7) {\texttt{stress(c)}};
+	
+	\node at (4,-2) (3) {\texttt{friends(a,a),\textcolor{c1}{smokes(a)}}};
+	\node at (8,-3) (4) {\texttt{friends(a,b),\textcolor{c2}{smokes(b)}}};
+	\node at (12,-4) (5) {\texttt{friends(a,c),\textcolor{c3}{smokes(c)}}};
+	
+	\node at (4,-5) (8) {\texttt{friends(b,a),\textcolor{c1}{smokes(a)}}};
+	\node at (4,-6) (9) {\texttt{friends(b,b),\textcolor{c2}{smokes(b)}}};
+	\node at (4,-7) (10) {\texttt{friends(b,c),\textcolor{c3}{smokes(c)}}};
+	
+	\node at (7,-8) (11) {\texttt{friends(c,a),\textcolor{c1}{smokes(a)}}};
+	\node at (7,-9) (12) {\texttt{friends(c,b),\textcolor{c2}{smokes(b)}}};
+	\node at (7,-10) (13) {\texttt{friends(c,c),\textcolor{c3}{smokes(c)}}};
+	
+	\draw[darkgray,->] (1.south) to (2.north);
+	
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](3.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](4.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](5.north);
+	
+	\draw[darkgray,->] (4.west) to [out=180,in=90,looseness=0.5](6.north);
+	\draw[darkgray,->] (5.west) to [out=180,in=90,looseness=0.5](7.north);
+	
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](8.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](9.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](10.east);
+	
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](11.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](12.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](13.east);
+	
+	% Loops
+	
+	%\draw[->,dashed,blue] ([xshift=-4mm]3.north) to ([xshift=4mm]1.south);
+%	
+%	\draw[->,dashed,blue] ([xshift=-4mm]8.north) to ([xshift=4mm,looseness=0.5]1.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]9.east) to ([xshift=4mm,looseness=0.5]4.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]10.east) to ([xshift=4mm,looseness=0.5]5.south);
+%	
+%	\draw[->,dashed,blue] ([xshift=-4mm]11.east) to ([xshift=4mm,looseness=0.5]1.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]12.east) to ([xshift=4mm,looseness=0.5]4.south);
+%	\draw[->,dashed,blue] ([xshift=-4mm]13.east) to ([xshift=4mm,looseness=0.5]5.south);
+	
+%	\node at (-2.5,5) (3) {$\mathbb{N}$};
+%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=15] node[left]{$id$} (3);
+%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=30] node[left]{$add1mod3$} (3);
+%	\draw[->,shorten >=1pt] (3) to [out=180,in=-90,loop,looseness=45] node[left]{$add2mod3$} (3);
+\end{tikzpicture}
+\caption{Trie representing proofs of the query. Coloured atoms indicate the presence of cycles.}
+\label{fig:nestedtries}
+\end{figure*}
 
 %%%
 %%%
