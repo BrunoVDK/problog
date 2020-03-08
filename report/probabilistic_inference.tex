@@ -214,20 +214,20 @@ $\lnot$p(c,b) & 0.6 \\
 	
 	\draw[darkgray,->] (1.south) to (2.north);
 	
-	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](3.north);
-	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](4.north);
-	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.5](5.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.9](3.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.9](4.north);
+	\draw[darkgray,->] (1.east) to [out=0,in=90,looseness=0.9](5.north);
 	
-	\draw[darkgray,->] (4.west) to [out=180,in=90,looseness=0.5](6.north);
-	\draw[darkgray,->] (5.west) to [out=180,in=90,looseness=0.5](7.north);
+	\draw[darkgray,->] (4.west) to [out=180,in=90,looseness=0.8](6.north);
+	\draw[darkgray,->] (5.west) to [out=180,in=90,looseness=0.6](7.north);
 	
-	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](8.east);
-	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](9.east);
-	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.5](10.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.9](8.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.9](9.east);
+	\draw[darkgray,->] ([xshift=6mm]4.south) to [out=-90,in=0,looseness=0.9](10.east);
 	
-	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](11.east);
-	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](12.east);
-	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.5](13.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.9](11.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.9](12.east);
+	\draw[darkgray,->] ([xshift=6mm]5.south) to [out=-90,in=0,looseness=0.9](13.east);
 	
 	% Loops
 	
@@ -257,17 +257,72 @@ $\lnot$p(c,b) & 0.6 \\
 \fakesubsection{SRL to PGM}
 
 \begin{figure*}
-  \tikz{
+  \begin{tikzpicture}[scale=0.85]
 % nodes
- \node[obs] (x) {$x$};%
- \node[latent,above=of x,xshift=-1cm,fill] (y) {$y$}; %
- \node[latent,above=of x,xshift=1cm] (z) {$z$}; %
+ \node[obs] (x) {$smokes(a)$};%
+
+\node[latent,below=of x,xshift=0cm] (c1) {$c_1$};
+\node[latent,below=of c1,xshift=0cm,fill] (sta) {$stress(a)$};
+\node[latent,below=of sta,fill] (pa) {$p_a$};
+
+\node[latent,below=of x,xshift=6cm] (c2) {$c_2$};
+\node[latent,right=of x,xshift=10cm] (c3) {$c_3$};
+
+\node[latent,below=of c2,xshift=-2cm] (fab) {$friends(a,b)$};
+\node[latent,below=of c2,xshift=2cm] (sb) {$smokes(b)$};
+
+\node[latent,below=of c3,xshift=-2cm] (fac) {$friends(a,c)$};
+\node[latent,right=of sb,xshift=4cm] (sc) {$smokes(c)$};
+
+\node[latent,below=of sb,xshift=-2cm] (c4) {$c_4$};
+\node[latent,below=of sc,xshift=0cm] (c5) {$c_5$};
+
+\node[latent,below=of c4,xshift=0cm] (fbc) {$friends(b,c)$};
+\node[latent,below=of c5,xshift=0cm] (fcb) {$friends(c,b)$};
+
+\node[latent,below=of fab,xshift=0cm] (pfab) {$p_{a,b}$};
+\node[latent,below=of fbc,xshift=0cm] (pfbc) {$p_{b,c}$};
+\node[latent,below=of fac,xshift=0cm] (pfac) {$p_{a,c}$};
+\node[latent,below=of fcb,xshift=0cm] (pfcb) {$p_{c,b}$};
+
+\node[latent,left=of c5,xshift=-1cm] (c6) {$c6$};
+\node[latent,left=of c6,xshift=-1cm] (c7) {$c7$};
+
+\node[latent,below=of c6,xshift=0cm] (stb) {$stress(b)$};
+\node[latent,below=of c7,xshift=0cm] (stc) {$stress(c)$};
+
+\node[latent,below=of stb,xshift=0cm] (pb) {$p_b$};
+\node[latent,below=of stc,xshift=0cm] (pc) {$p_c$};
+
+%\node[latent,left=of c1,xshift=0cm] (pab) {$p(a,b)$};
+%\node[latent,right=of c2,xshift=0cm] (pac) {$p(a,c)$};
+%\node[latent,left=of c3,xshift=0cm] (pbc) {$p(b,c)$};
+%\node[latent,right=of c4,xshift=1cm] (pcb) {$p(c,b)$};
+
 % plate
 % \plate [inner sep=.25cm,yshift=.2cm] {plate1} {(x)(y)(z)} {$N$}; %
 % edges
- \edge {y,z} {x}  
-}
-\caption{Bayes network representation of the program.}
+\edge {c1,c2,c3} {x}
+\edge {sta} {c1}
+\edge {pa} {sta}  
+\edge {fab,sb} {c2}  
+\edge {fac,sc} {c3}  
+\edge {c4} {sb}
+\edge {c5} {sc}
+\edge {fbc,c7} {c4}
+\edge {fcb,c6} {c5}
+\edge {pb} {stb}
+\edge {pc} {stc}
+\edge {pfab} {fab}
+\edge {pfbc} {fbc}
+\edge {pfac} {fac}
+\edge {pfcb} {fcb}
+\edge {stb} {c6}
+\edge {stc} {c7}
+\edge {c6} {sb}
+\edge {c7} {sc}
+\end{tikzpicture}
+\caption{Bayesian network representing the ground acyclic program.}
 \end{figure*}
 
 %%%
