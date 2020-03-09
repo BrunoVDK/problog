@@ -257,7 +257,8 @@ $\lnot$p(c,b) & 0.6 \\
 \fakesubsection{SRL to PGM}
 
 \begin{figure*}
-  \begin{tikzpicture}[scale=0.85]
+\centering h
+  \begin{tikzpicture}[scale=0.85, every node/.style={scale=0.85}]
 % nodes
  \node[obs] (x) {$smokes(a)$};%
 
@@ -323,15 +324,16 @@ $\lnot$p(c,b) & 0.6 \\
 \edge {c7} {sc}
 \end{tikzpicture}
 \caption{Bayesian network representing the ground acyclic program.}
+\label{fig:bayesian}
 \end{figure*}
+
+A Bayesian network is shown in figure \ref{fig:bayesian}.
 
 %%%
 %%%
 %%%
 
 \fakesubsection{PGM to CNF}
-
-
 
 %%%
 %%%
