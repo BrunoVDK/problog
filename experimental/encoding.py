@@ -10,8 +10,8 @@ class Encoding:
     def __init__(self, network, encoding="ENC1"):
         self.network = network
         self.weights = []
-        self.dimacs = ""
-        self.latex = ""
+        self.dimacs = []
+        self.latex = []
         self.maxidx = 0
         self.__init_indicator_clauses()
         if encoding == "ENC1":
@@ -26,12 +26,12 @@ class Encoding:
             start = network.index(var, values[0])
             indices = range(start, start + len(values))
             self.weights = self.weights + len(values) * [1.0]
-            self.dimacs = self.dimacs + " ".join(list(map(str, indices))) + " 0" + "\n"
-            self.latex = self.latex + " \lor ".join(list(map(str, values))) + "\n"
+            self.dimacs = self.dimacs + [" ".join(list(map(str, indices))) + " 0"]
+            self.latex = self.latex + [" \lor ".join(list(map(str, values)))]
             for i in indices:
                 for j in range(i + 1, start + len(values)):
-                    self.dimacs = self.dimacs + "-" + str(i) + " -" + str(j) + " 0" + "\n"
-                    self.latex = self.latex + "\n"
+                    self.dimacs = self.dimacs + ["-" + str(i) + " -" + str(j) + " 0"]
+                    self.latex = self.latex + []
 
     def __init_ENC1(self):
         # Return the parameter clauses for encoding 1 (Chavira, 2008, p. 779).
@@ -41,18 +41,31 @@ class Encoding:
             for combo in network.combinations(var):
                 param_idx = param_idx + 1
                 if network.is_leaf(var):
-                    self.dimacs = self.dimacs + str(param_idx) + " -" + str(combo[0][0]) + " 0" + "\n"
-                    self.dimacs = self.dimacs + str(combo[0][0]) + " -" + str(param_idx) + " 0" + "\n"
+                    self.dimacs = self.dimacs + [str(param_idx) + " -" + str(combo[0][0]) + " 0"]
+                    self.dimacs = self.dimacs + [str(combo[0][0]) + " -" + str(param_idx) + " 0"]
+                    self.latex = self.latex + []
                 else:
-                    self.dimacs = self.dimacs + str(param_idx) + " " + " ".join(["-" + str(v) for v in combo[0]]) + " 0" + "\n"
+                    self.dimacs = self.dimacs + [str(param_idx) + " " + " ".join(["-" + str(v) for v in combo[0]]) + " 0"]
                     for v in combo[0]:
-                        self.dimacs = self.dimacs + "-" + str(param_idx) + " " + str(v) + " 0" + "\n"
+                        self.dimacs = self.dimacs + ["-" + str(param_idx) + " " + str(v) + " 0"]
+                    self.latex = self.latex + []
                 self.weights = self.weights + [combo[1]] # Probability
         self.maxidx = param_idx
 
     def __init_ENC2(self):
         # Return the parameter clauses for encoding 2.
         pass
+
+    def add_query(self, atom, value):
+        self.dimacs = self.dimacs + [str(network.index(atom, value)) + " 0"]
+
+    def print_dimacs(self):
+        print("p cnf " + str(self.maxidx) + " " + str(len(self.dimacs)))
+        self.print_weights()
+        print("\n".join(self.dimacs))
+
+    def print_latex(self):
+        print("\n".join(self.latex))
 
     def print_weights(self):
         print("c weights " + "".join([str(w) + " 1.0 " for w in self.weights]))
@@ -83,10 +96,8 @@ factors = {
 network = BayesianNetwork(factors)
 
 encoding = Encoding(network)
-print(encoding.maxidx)
-encoding.print_weights()
-print(encoding.dimacs)
-print(network.index('smokes(a)', 'true'))
+encoding.add_query(atom="smokes(a)", value="true")
+encoding.print_latex()
 
 # Illustration of workings of LogicFormula from ProbLog
 

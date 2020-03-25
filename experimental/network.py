@@ -9,7 +9,6 @@ class BayesianNetwork:
         self.__factors = factors
         self.variables = list(factors.keys())
         self.__varidx = list(map(lambda x: x+1, accumulate([0] + [len(self.values(var)) for var in self.variables])))
-        print(self.__varidx)
 
     def __startidx(self, variable):
         return self.__varidx[self.variables.index(variable)]
