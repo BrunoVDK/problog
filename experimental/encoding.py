@@ -55,7 +55,7 @@ class Encoding:
         pass
 
     def print_weights(self):
-        print("".join([str(w) + " 1.0 " for w in self.weights]))
+        print("c weights " + "".join([str(w) + " 1.0 " for w in self.weights]))
 
 # Bayesian network specification
 
@@ -65,7 +65,19 @@ factors = {
 'stress(c)': Factor(probabilities=[0.2, 0.8]),
 'aux1': Factor(parents=['stress(a)'], probabilities=[0.3, 0.7, 0.0, 1.0]),
 'aux2': Factor(parents=['stress(b)'], probabilities=[0.3, 0.7, 0.0, 1.0]),
-'aux3': Factor(parents=['stress(c)'], probabilities=[0.3, 0.7, 0.0, 1.0])
+'aux3': Factor(parents=['stress(c)'], probabilities=[0.3, 0.7, 0.0, 1.0]),
+'friends(a,b)': Factor(probabilities=[0.1, 0.9]),
+'friends(a,c)': Factor(probabilities=[0.1, 0.9]),
+'friends(b,c)': Factor(probabilities=[0.1, 0.9]),
+'friends(c,b)': Factor(probabilities=[0.1, 0.9]),
+'aux4': Factor(parents=['friends(b,c)', 'aux3'], probabilities=[0.4, 0.6, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0]),
+'aux5': Factor(parents=['friends(c,b)', 'aux2'], probabilities=[0.4, 0.6, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0]),
+'smokes(b)': Factor(parents=['aux4', 'aux2'], probabilities=[1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0]),
+'smokes(c)': Factor(parents=['aux5', 'aux3'], probabilities=[1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0]),
+'aux6': Factor(parents=['friends(a,b)', 'smokes(b)'], probabilities=[0.4, 0.6, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0]),
+'aux7': Factor(parents=['friends(a,c)', 'smokes(c)'], probabilities=[0.4, 0.6, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0]),
+'smokes(a)': Factor(parents=['aux1', 'aux6', 'aux7'],
+                    probabilities=[1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0]),
 }
 
 network = BayesianNetwork(factors)
@@ -74,6 +86,7 @@ encoding = Encoding(network)
 print(encoding.maxidx)
 encoding.print_weights()
 print(encoding.dimacs)
+print(network.index('smokes(a)', 'true'))
 
 # Illustration of workings of LogicFormula from ProbLog
 
