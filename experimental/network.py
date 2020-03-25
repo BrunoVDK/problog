@@ -1,4 +1,4 @@
-from builtins import list, len, map, range
+from builtins import list, len, map, range, zip, str
 from itertools import accumulate, product
 
 
@@ -25,7 +25,7 @@ class BayesianNetwork:
     def values_indices(self, variable):
         start = self.__startidx(variable)
         length = len(self.__factors.get(variable).possible_values)
-        return list(range(start, start + length))
+        return zip([variable + "=" + str(v) for v in self.values(variable)], list(range(start, start + length)))
 
     def __probabilities(self, variable):
         return self.__factors.get(variable).probabilities

@@ -1,4 +1,4 @@
-from builtins import list, range, len, str, map
+from builtins import list, range, len, str, map, zip
 
 from factor import Factor
 from network import BayesianNetwork
@@ -27,11 +27,12 @@ class Encoding:
             indices = range(start, start + len(values))
             self.weights = self.weights + len(values) * [1.0]
             self.dimacs = self.dimacs + [" ".join(list(map(str, indices))) + " 0"]
-            self.latex = self.latex + [" \lor ".join(list(map(str, values)))]
+            self.latex = self.latex + [" \lor ".join(["\lambda_{"+ var + "=" + v +"}" for v in values])]
             for i in indices:
                 for j in range(i + 1, start + len(values)):
                     self.dimacs = self.dimacs + ["-" + str(i) + " -" + str(j) + " 0"]
-                    self.latex = self.latex + []
+                    self.latex = self.latex + ["\lnot\lambda_{" + var + "=" + values[indices.index(i)]
+                                               + "} \lor \lnot\lambda_{" + var + "=" + values[indices.index(j)] + "}"]
 
     def __init_ENC1(self):
         # Return the parameter clauses for encoding 1 (Chavira, 2008, p. 779).
@@ -41,14 +42,16 @@ class Encoding:
             for combo in network.combinations(var):
                 param_idx = param_idx + 1
                 if network.is_leaf(var):
-                    self.dimacs = self.dimacs + [str(param_idx) + " -" + str(combo[0][0]) + " 0"]
-                    self.dimacs = self.dimacs + [str(combo[0][0]) + " -" + str(param_idx) + " 0"]
-                    self.latex = self.latex + []
+                    self.dimacs = self.dimacs + [str(param_idx) + " -" + str(combo[0][0][1]) + " 0"]
+                    self.dimacs = self.dimacs + [str(combo[0][0][1]) + " -" + str(param_idx) + " 0"]
+                    self.latex = self.latex + ["\lambda_{" + combo[0][0][0] + "}" +
+                                               " \Leftrightarrow \\theta_{" + combo[0][0][0] + "}"]
                 else:
-                    self.dimacs = self.dimacs + [str(param_idx) + " " + " ".join(["-" + str(v) for v in combo[0]]) + " 0"]
+                    self.dimacs = self.dimacs + [str(param_idx) + " " + " ".join(["-" + str(v[1]) for v in combo[0]]) + " 0"]
                     for v in combo[0]:
-                        self.dimacs = self.dimacs + ["-" + str(param_idx) + " " + str(v) + " 0"]
-                    self.latex = self.latex + []
+                        self.dimacs = self.dimacs + ["-" + str(param_idx) + " " + str(v[1]) + " 0"]
+                    self.latex = self.latex + [" \land ".join(["\lambda_{" + str(v[0]) + "}" for v in combo[0]]) +
+                                               " \Leftrightarrow \\theta_{" + combo[0][0][0] + "|}"]
                 self.weights = self.weights + [combo[1]] # Probability
         self.maxidx = param_idx
 
@@ -65,7 +68,7 @@ class Encoding:
         print("\n".join(self.dimacs))
 
     def print_latex(self):
-        print("\n".join(self.latex))
+        print("\\\\\n".join(self.latex))
 
     def print_weights(self):
         print("c weights " + "".join([str(w) + " 1.0 " for w in self.weights]))
