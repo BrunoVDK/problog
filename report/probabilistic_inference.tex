@@ -335,7 +335,14 @@ A Bayesian network is shown in figure \ref{fig:bayesian}. The corresponding cond
 
 \fakesubsection{PGM to CNF}
 
-Since the bayesian network consists of nothing but boolean variables indicator variables representing each value of each variable were deemed useless. Instead the variables are represented by atoms (since these are either positive or negative anyways). Each row in each CPT is encoded by an equivalence.
+The above Bayesian network can subsequently be encoded by a logical formula. Since it consists of nothing but boolean variables, indicator variables representing each value of each variable (e.g. $\lambda_{stress(a)=true}$ and $\lambda_{stress(a)=false})$ are not used in any of the DIMACS files corresponding to encodings presented below. This to avoid unnecessary cluttering. Instead just one atom is introduced for each network variable. This also makes the indicator clauses redundant.\\
+
+\noindent In \texttt{ENC1} each row in each CPT is encoded by a parameter clause.\\
+
+\noindent In \texttt{ENC2} an order is assumed over each variable's values. Then, each row of each CPT is encoded by an equivalence.\\
+
+\noindent Encoding the deterministic noisy-OR makes either of these more compact. For example, the CPT of \texttt{smokes(a)} can be represented by the following one-liner : $$smokes(a)\Leftrightarrow aux_1 \lor aux_6 \lor aux_7$$
+\noindent 
 
 %%%
 %%%
