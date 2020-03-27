@@ -62,7 +62,7 @@ dag2 = LogicDAG.create_from(lf2, avoid_name_clash=False, keep_order=True, label_
 cnf2 = CNF.create_from(dag2)
 # # print(cnf2.to_dimacs(weighted=True, invert_weights=True))
 ddnnf2 = DDNNF.create_from(cnf2)
-print(ddnnf2.evaluate())
+#print(ddnnf2.evaluate())
 #
 # import PyBool_public_interface as Bool
 # expr = Bool.parse_std("input.txt")
@@ -107,26 +107,16 @@ print(ddnnf2.evaluate())
 # query(smokes(a)).
 # """)
 p3 = PrologString("""
-increaseOsteoblasts :- calcium.
-0.5::\+increaseOsteoblasts :- calcium, bispho.
-
-reduceOsteoclasts :- bispho.
-1.0::\+reduceOsteoclasts :- calcium , bispho.
-
-osteoprosis :- initialOsteoprosis.
-0.85::\+osteoprosis :- reduceOsteoclasts.   % Bisphosphonates
-0.15::\+osteoprosis :- increaseOsteoblasts. % Calcium
-
-% Prior probabilities
-0.5::calcium. 0.5::bispho. 0.5::initialOsteoprosis.
-
-% Query probability of effect
-query(increaseOsteoblasts).
-query(reduceOsteoclasts).
-query(osteoprosis).
-query(calcium).
-query(bispho).
-query(initialOsteoprosis).
+person(a). 
+person(b). 
+person(c). 
+0.2::stress(X) :- person(X). 
+0.1::friends(X,Y) :- person(X), person(Y). 
+0.3::smokes(X) :- stress(X). 
+0.4::smokes(X) :- friends(X,Y), smokes(Y).
+evidence(friends(a,b), true).
+evidence(friends(a,c), true).
+query(smokes(a)).
 """)
 lf3 = LogicFormula.create_from(p3, avoid_name_clash=True, keep_order=True, label_all=True)
 # print(LogicFormula.to_prolog(lf2))
@@ -139,6 +129,7 @@ bn = problog.tasks.bayesnet.formula_to_bn(dag3)
 # print(bn.to_graphviz())
 
 cnf3 = CNF.create_from(dag3)
-print(cnf3.to_dimacs(weighted=True, invert_weights=False, names=True))
+# print(cnf3.to_dimacs(weighted=True, invert_weights=False, names=True))
 ddnnf3 = DDNNF.create_from(cnf3)
 print(ddnnf3.evaluate())
+# 0,10559646720000002
