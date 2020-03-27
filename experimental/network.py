@@ -22,10 +22,11 @@ class BayesianNetwork:
     def values(self, variable):
         return self.__factors.get(variable).possible_values
 
-    def values_indices(self, variable):
+    def values_indices(self, variable, full=False):
         start = self.__startidx(variable)
         length = len(self.__factors.get(variable).possible_values)
-        return zip([variable + "=" + str(v) for v in self.values(variable)], list(range(start, start + length)))
+        return zip([variable + "=" + str(v) for v in self.values(variable)] if not full else [(variable, str(v), variable + "=" + str(v)) for v in self.values(variable)],
+                   list(range(start, start + length)))
 
     def __probabilities(self, variable):
         return self.__factors.get(variable).probabilities
@@ -33,10 +34,9 @@ class BayesianNetwork:
     def parents(self, variable):
         return self.__factors.get(variable).parents
 
-    def combinations(self, variable):
+    def combinations(self, variable, full=False, parents_only=False):
         # Returns combinations of values of the given variable and its parents.
-        #   together with the corresponding probability as a tuple : (tuple of values, probability).
-        indices = [self.values_indices(parent) for parent in self.parents(variable)] + [self.values_indices(variable)]
+        indices = [self.values_indices(parent, full=full) for parent in self.parents(variable)] + ([] if parents_only else [self.values_indices(variable, full=full)])
         pi = 0 # index of probability
         for combo in product(*indices):
             yield (combo, self.__probabilities(variable)[pi])
@@ -44,3 +44,6 @@ class BayesianNetwork:
 
     def is_leaf(self, variable):
         return self.__factors.get(variable).parents == []
+
+    def is_noisy(self, variable):
+        return self.__factors.get(variable).noisy
