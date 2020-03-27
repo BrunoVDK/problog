@@ -1,0 +1,138 @@
+\documentclass[]{article}
+
+\begin{document}
+
+\section{Indicator Clauses}
+
+$
+\lambda_{stress(a)=true} \lor \lambda_{stress(a)=false}\\
+\lnot\lambda_{stress(a)=true} \lor \lnot\lambda_{stress(a)=false}\\
+\lambda_{stress(b)=true} \lor \lambda_{stress(b)=false}\\
+\lnot\lambda_{stress(b)=true} \lor \lnot\lambda_{stress(b)=false}\\
+\lambda_{stress(c)=true} \lor \lambda_{stress(c)=false}\\
+\lnot\lambda_{stress(c)=true} \lor \lnot\lambda_{stress(c)=false}\\
+\lambda_{aux1=true} \lor \lambda_{aux1=false}\\
+\lnot\lambda_{aux1=true} \lor \lnot\lambda_{aux1=false}\\
+\lambda_{aux2=true} \lor \lambda_{aux2=false}\\
+\lnot\lambda_{aux2=true} \lor \lnot\lambda_{aux2=false}\\
+\lambda_{aux3=true} \lor \lambda_{aux3=false}\\
+\lnot\lambda_{aux3=true} \lor \lnot\lambda_{aux3=false}\\
+\lambda_{friends(a,b)=true} \lor \lambda_{friends(a,b)=false}\\
+\lnot\lambda_{friends(a,b)=true} \lor \lnot\lambda_{friends(a,b)=false}\\
+\lambda_{friends(a,c)=true} \lor \lambda_{friends(a,c)=false}\\
+\lnot\lambda_{friends(a,c)=true} \lor \lnot\lambda_{friends(a,c)=false}\\
+\lambda_{friends(b,c)=true} \lor \lambda_{friends(b,c)=false}\\
+\lnot\lambda_{friends(b,c)=true} \lor \lnot\lambda_{friends(b,c)=false}\\
+\lambda_{friends(c,b)=true} \lor \lambda_{friends(c,b)=false}\\
+\lnot\lambda_{friends(c,b)=true} \lor \lnot\lambda_{friends(c,b)=false}\\
+\lambda_{aux4=true} \lor \lambda_{aux4=false}\\
+\lnot\lambda_{aux4=true} \lor \lnot\lambda_{aux4=false}\\
+\lambda_{aux5=true} \lor \lambda_{aux5=false}\\
+\lnot\lambda_{aux5=true} \lor \lnot\lambda_{aux5=false}\\
+\lambda_{smokes(b)=true} \lor \lambda_{smokes(b)=false}\\
+\lnot\lambda_{smokes(b)=true} \lor \lnot\lambda_{smokes(b)=false}\\
+\lambda_{smokes(c)=true} \lor \lambda_{smokes(c)=false}\\
+\lnot\lambda_{smokes(c)=true} \lor \lnot\lambda_{smokes(c)=false}\\
+\lambda_{aux6=true} \lor \lambda_{aux6=false}\\
+\lnot\lambda_{aux6=true} \lor \lnot\lambda_{aux6=false}\\
+\lambda_{aux7=true} \lor \lambda_{aux7=false}\\
+\lnot\lambda_{aux7=true} \lor \lnot\lambda_{aux7=false}\\
+\lambda_{smokes(a)=true} \lor \lambda_{smokes(a)=false}\\
+\lnot\lambda_{smokes(a)=true} \lor \lnot\lambda_{smokes(a)=false}
+$
+
+\section{Parameter Clauses}
+$
+\lambda_{stress(a)=true} \Leftrightarrow \theta_{stress(a)=true}\\
+\lambda_{stress(a)=false} \Leftrightarrow \theta_{stress(a)=false}\\
+\lambda_{stress(b)=true} \Leftrightarrow \theta_{stress(b)=true}\\
+\lambda_{stress(b)=false} \Leftrightarrow \theta_{stress(b)=false}\\
+\lambda_{stress(c)=true} \Leftrightarrow \theta_{stress(c)=true}\\
+\lambda_{stress(c)=false} \Leftrightarrow \theta_{stress(c)=false}\\
+\lambda_{stress(a)=true} \land \lambda_{aux1=true} \Leftrightarrow \theta_{aux1=true|stress(a)=true}\\
+\lambda_{stress(a)=true} \land \lambda_{aux1=false} \Leftrightarrow \theta_{aux1=false|stress(a)=true}\\
+\lambda_{stress(a)=false} \land \lambda_{aux1=true} \Leftrightarrow \theta_{aux1=true|stress(a)=false}\\
+\lambda_{stress(a)=false} \land \lambda_{aux1=false} \Leftrightarrow \theta_{aux1=false|stress(a)=false}\\
+\lambda_{stress(b)=true} \land \lambda_{aux2=true} \Leftrightarrow \theta_{aux2=true|stress(b)=true}\\
+\lambda_{stress(b)=true} \land \lambda_{aux2=false} \Leftrightarrow \theta_{aux2=false|stress(b)=true}\\
+\lambda_{stress(b)=false} \land \lambda_{aux2=true} \Leftrightarrow \theta_{aux2=true|stress(b)=false}\\
+\lambda_{stress(b)=false} \land \lambda_{aux2=false} \Leftrightarrow \theta_{aux2=false|stress(b)=false}\\
+\lambda_{stress(c)=true} \land \lambda_{aux3=true} \Leftrightarrow \theta_{aux3=true|stress(c)=true}\\
+\lambda_{stress(c)=true} \land \lambda_{aux3=false} \Leftrightarrow \theta_{aux3=false|stress(c)=true}\\
+\lambda_{stress(c)=false} \land \lambda_{aux3=true} \Leftrightarrow \theta_{aux3=true|stress(c)=false}\\
+\lambda_{stress(c)=false} \land \lambda_{aux3=false} \Leftrightarrow \theta_{aux3=false|stress(c)=false}\\
+\lambda_{friends(a,b)=true} \Leftrightarrow \theta_{friends(a,b)=true}\\
+\lambda_{friends(a,b)=false} \Leftrightarrow \theta_{friends(a,b)=false}\\
+\lambda_{friends(a,c)=true} \Leftrightarrow \theta_{friends(a,c)=true}\\
+\lambda_{friends(a,c)=false} \Leftrightarrow \theta_{friends(a,c)=false}\\
+\lambda_{friends(b,c)=true} \Leftrightarrow \theta_{friends(b,c)=true}\\
+\lambda_{friends(b,c)=false} \Leftrightarrow \theta_{friends(b,c)=false}\\
+\lambda_{friends(c,b)=true} \Leftrightarrow \theta_{friends(c,b)=true}\\
+\lambda_{friends(c,b)=false} \Leftrightarrow \theta_{friends(c,b)=false}\\
+\lambda_{friends(b,c)=true} \land \lambda_{aux3=true} \land \lambda_{aux4=true} \Leftrightarrow \theta_{aux4=true|friends(b,c)=true \land aux3=true}\\
+\lambda_{friends(b,c)=true} \land \lambda_{aux3=true} \land \lambda_{aux4=false} \Leftrightarrow \theta_{aux4=false|friends(b,c)=true \land aux3=true}\\
+\lambda_{friends(b,c)=true} \land \lambda_{aux3=false} \land \lambda_{aux4=true} \Leftrightarrow \theta_{aux4=true|friends(b,c)=true \land aux3=false}\\
+\lambda_{friends(b,c)=true} \land \lambda_{aux3=false} \land \lambda_{aux4=false} \Leftrightarrow \theta_{aux4=false|friends(b,c)=true \land aux3=false}\\
+\lambda_{friends(b,c)=false} \land \lambda_{aux3=true} \land \lambda_{aux4=true} \Leftrightarrow \theta_{aux4=true|friends(b,c)=false \land aux3=true}\\
+\lambda_{friends(b,c)=false} \land \lambda_{aux3=true} \land \lambda_{aux4=false} \Leftrightarrow \theta_{aux4=false|friends(b,c)=false \land aux3=true}\\
+\lambda_{friends(b,c)=false} \land \lambda_{aux3=false} \land \lambda_{aux4=true} \Leftrightarrow \theta_{aux4=true|friends(b,c)=false \land aux3=false}\\
+\lambda_{friends(b,c)=false} \land \lambda_{aux3=false} \land \lambda_{aux4=false} \Leftrightarrow \theta_{aux4=false|friends(b,c)=false \land aux3=false}\\
+\lambda_{friends(c,b)=true} \land \lambda_{aux2=true} \land \lambda_{aux5=true} \Leftrightarrow \theta_{aux5=true|friends(c,b)=true \land aux2=true}\\
+\lambda_{friends(c,b)=true} \land \lambda_{aux2=true} \land \lambda_{aux5=false} \Leftrightarrow \theta_{aux5=false|friends(c,b)=true \land aux2=true}\\
+\lambda_{friends(c,b)=true} \land \lambda_{aux2=false} \land \lambda_{aux5=true} \Leftrightarrow \theta_{aux5=true|friends(c,b)=true \land aux2=false}\\
+\lambda_{friends(c,b)=true} \land \lambda_{aux2=false} \land \lambda_{aux5=false} \Leftrightarrow \theta_{aux5=false|friends(c,b)=true \land aux2=false}\\
+\lambda_{friends(c,b)=false} \land \lambda_{aux2=true} \land \lambda_{aux5=true} \Leftrightarrow \theta_{aux5=true|friends(c,b)=false \land aux2=true}\\
+\lambda_{friends(c,b)=false} \land \lambda_{aux2=true} \land \lambda_{aux5=false} \Leftrightarrow \theta_{aux5=false|friends(c,b)=false \land aux2=true}\\
+\lambda_{friends(c,b)=false} \land \lambda_{aux2=false} \land \lambda_{aux5=true} \Leftrightarrow \theta_{aux5=true|friends(c,b)=false \land aux2=false}\\
+\lambda_{friends(c,b)=false} \land \lambda_{aux2=false} \land \lambda_{aux5=false} \Leftrightarrow \theta_{aux5=false|friends(c,b)=false \land aux2=false}\\
+\lambda_{aux4=true} \land \lambda_{aux2=true} \land \lambda_{smokes(b)=true} \Leftrightarrow \theta_{smokes(b)=true|aux4=true \land aux2=true}\\
+\lambda_{aux4=true} \land \lambda_{aux2=true} \land \lambda_{smokes(b)=false} \Leftrightarrow \theta_{smokes(b)=false|aux4=true \land aux2=true}\\
+\lambda_{aux4=true} \land \lambda_{aux2=false} \land \lambda_{smokes(b)=true} \Leftrightarrow \theta_{smokes(b)=true|aux4=true \land aux2=false}\\
+\lambda_{aux4=true} \land \lambda_{aux2=false} \land \lambda_{smokes(b)=false} \Leftrightarrow \theta_{smokes(b)=false|aux4=true \land aux2=false}\\
+\lambda_{aux4=false} \land \lambda_{aux2=true} \land \lambda_{smokes(b)=true} \Leftrightarrow \theta_{smokes(b)=true|aux4=false \land aux2=true}\\
+\lambda_{aux4=false} \land \lambda_{aux2=true} \land \lambda_{smokes(b)=false} \Leftrightarrow \theta_{smokes(b)=false|aux4=false \land aux2=true}\\
+\lambda_{aux4=false} \land \lambda_{aux2=false} \land \lambda_{smokes(b)=true} \Leftrightarrow \theta_{smokes(b)=true|aux4=false \land aux2=false}\\
+\lambda_{aux4=false} \land \lambda_{aux2=false} \land \lambda_{smokes(b)=false} \Leftrightarrow \theta_{smokes(b)=false|aux4=false \land aux2=false}\\
+\lambda_{aux5=true} \land \lambda_{aux3=true} \land \lambda_{smokes(c)=true} \Leftrightarrow \theta_{smokes(c)=true|aux5=true \land aux3=true}\\
+\lambda_{aux5=true} \land \lambda_{aux3=true} \land \lambda_{smokes(c)=false} \Leftrightarrow \theta_{smokes(c)=false|aux5=true \land aux3=true}\\
+\lambda_{aux5=true} \land \lambda_{aux3=false} \land \lambda_{smokes(c)=true} \Leftrightarrow \theta_{smokes(c)=true|aux5=true \land aux3=false}\\
+\lambda_{aux5=true} \land \lambda_{aux3=false} \land \lambda_{smokes(c)=false} \Leftrightarrow \theta_{smokes(c)=false|aux5=true \land aux3=false}\\
+\lambda_{aux5=false} \land \lambda_{aux3=true} \land \lambda_{smokes(c)=true} \Leftrightarrow \theta_{smokes(c)=true|aux5=false \land aux3=true}\\
+\lambda_{aux5=false} \land \lambda_{aux3=true} \land \lambda_{smokes(c)=false} \Leftrightarrow \theta_{smokes(c)=false|aux5=false \land aux3=true}\\
+\lambda_{aux5=false} \land \lambda_{aux3=false} \land \lambda_{smokes(c)=true} \Leftrightarrow \theta_{smokes(c)=true|aux5=false \land aux3=false}\\
+\lambda_{aux5=false} \land \lambda_{aux3=false} \land \lambda_{smokes(c)=false} \Leftrightarrow \theta_{smokes(c)=false|aux5=false \land aux3=false}\\
+\lambda_{friends(a,b)=true} \land \lambda_{smokes(b)=true} \land \lambda_{aux6=true} \Leftrightarrow \theta_{aux6=true|friends(a,b)=true \land smokes(b)=true}\\
+\lambda_{friends(a,b)=true} \land \lambda_{smokes(b)=true} \land \lambda_{aux6=false} \Leftrightarrow \theta_{aux6=false|friends(a,b)=true \land smokes(b)=true}\\
+\lambda_{friends(a,b)=true} \land \lambda_{smokes(b)=false} \land \lambda_{aux6=true} \Leftrightarrow \theta_{aux6=true|friends(a,b)=true \land smokes(b)=false}\\
+\lambda_{friends(a,b)=true} \land \lambda_{smokes(b)=false} \land \lambda_{aux6=false} \Leftrightarrow \theta_{aux6=false|friends(a,b)=true \land smokes(b)=false}\\
+\lambda_{friends(a,b)=false} \land \lambda_{smokes(b)=true} \land \lambda_{aux6=true} \Leftrightarrow \theta_{aux6=true|friends(a,b)=false \land smokes(b)=true}\\
+\lambda_{friends(a,b)=false} \land \lambda_{smokes(b)=true} \land \lambda_{aux6=false} \Leftrightarrow \theta_{aux6=false|friends(a,b)=false \land smokes(b)=true}\\
+\lambda_{friends(a,b)=false} \land \lambda_{smokes(b)=false} \land \lambda_{aux6=true} \Leftrightarrow \theta_{aux6=true|friends(a,b)=false \land smokes(b)=false}\\
+\lambda_{friends(a,b)=false} \land \lambda_{smokes(b)=false} \land \lambda_{aux6=false} \Leftrightarrow \theta_{aux6=false|friends(a,b)=false \land smokes(b)=false}\\
+\lambda_{friends(a,c)=true} \land \lambda_{smokes(c)=true} \land \lambda_{aux7=true} \Leftrightarrow \theta_{aux7=true|friends(a,c)=true \land smokes(c)=true}\\
+\lambda_{friends(a,c)=true} \land \lambda_{smokes(c)=true} \land \lambda_{aux7=false} \Leftrightarrow \theta_{aux7=false|friends(a,c)=true \land smokes(c)=true}\\
+\lambda_{friends(a,c)=true} \land \lambda_{smokes(c)=false} \land \lambda_{aux7=true} \Leftrightarrow \theta_{aux7=true|friends(a,c)=true \land smokes(c)=false}\\
+\lambda_{friends(a,c)=true} \land \lambda_{smokes(c)=false} \land \lambda_{aux7=false} \Leftrightarrow \theta_{aux7=false|friends(a,c)=true \land smokes(c)=false}\\
+\lambda_{friends(a,c)=false} \land \lambda_{smokes(c)=true} \land \lambda_{aux7=true} \Leftrightarrow \theta_{aux7=true|friends(a,c)=false \land smokes(c)=true}\\
+\lambda_{friends(a,c)=false} \land \lambda_{smokes(c)=true} \land \lambda_{aux7=false} \Leftrightarrow \theta_{aux7=false|friends(a,c)=false \land smokes(c)=true}\\
+\lambda_{friends(a,c)=false} \land \lambda_{smokes(c)=false} \land \lambda_{aux7=true} \Leftrightarrow \theta_{aux7=true|friends(a,c)=false \land smokes(c)=false}\\
+\lambda_{friends(a,c)=false} \land \lambda_{smokes(c)=false} \land \lambda_{aux7=false} \Leftrightarrow \theta_{aux7=false|friends(a,c)=false \land smokes(c)=false}\\
+\lambda_{aux1=true} \land \lambda_{aux6=true} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=true \land aux6=true \land aux7=true}\\
+\lambda_{aux1=true} \land \lambda_{aux6=true} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=true \land aux6=true \land aux7=true}\\
+\lambda_{aux1=true} \land \lambda_{aux6=true} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=true \land aux6=true \land aux7=false}\\
+\lambda_{aux1=true} \land \lambda_{aux6=true} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=true \land aux6=true \land aux7=false}\\
+\lambda_{aux1=true} \land \lambda_{aux6=false} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=true \land aux6=false \land aux7=true}\\
+\lambda_{aux1=true} \land \lambda_{aux6=false} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=true \land aux6=false \land aux7=true}\\
+\lambda_{aux1=true} \land \lambda_{aux6=false} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=true \land aux6=false \land aux7=false}\\
+\lambda_{aux1=true} \land \lambda_{aux6=false} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=true \land aux6=false \land aux7=false}\\
+\lambda_{aux1=false} \land \lambda_{aux6=true} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=false \land aux6=true \land aux7=true}\\
+\lambda_{aux1=false} \land \lambda_{aux6=true} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=false \land aux6=true \land aux7=true}\\
+\lambda_{aux1=false} \land \lambda_{aux6=true} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=false \land aux6=true \land aux7=false}\\
+\lambda_{aux1=false} \land \lambda_{aux6=true} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=false \land aux6=true \land aux7=false}\\
+\lambda_{aux1=false} \land \lambda_{aux6=false} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=false \land aux6=false \land aux7=true}\\
+\lambda_{aux1=false} \land \lambda_{aux6=false} \land \lambda_{aux7=true} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=false \land aux6=false \land aux7=true}\\
+\lambda_{aux1=false} \land \lambda_{aux6=false} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=true} \Leftrightarrow \theta_{smokes(a)=true|aux1=false \land aux6=false \land aux7=false}\\
+\lambda_{aux1=false} \land \lambda_{aux6=false} \land \lambda_{aux7=false} \land \lambda_{smokes(a)=false} \Leftrightarrow \theta_{smokes(a)=false|aux1=false \land aux6=false \land aux7=false}
+$
+
+\end{document}
