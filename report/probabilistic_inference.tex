@@ -257,73 +257,54 @@ $\lnot$p(c,b) & 0.6 \\
 \fakesubsection{SRL to PGM}
 
 \begin{figure*}
-\centering
-  \begin{tikzpicture}[scale=0.85, every node/.style={scale=0.85}]
-% nodes
- \node[obs] (x) {$smokes(a)$};%
+	\centering
+	\begin{tikzpicture}[scale=0.85, every node/.style={scale=0.85}]
+	
+		% Nodes
+		\node[obs] (sma) {$smokes(a)$};
+		\node[latent,below=of sma,xshift=-8cm] (aux1) {$aux_1$};
+		\node[latent,below=of aux1] (sta) {$stress(a)$};
+		\node[latent,below=of sma,xshift=-2cm] (aux6) {$aux_6$};
+		\node[latent,below=of sma,xshift=4cm] (aux7) {$aux_7$};
+		\node[latent,below=of aux6] (smb) {$smokes(b)$};
+		\node[latent,below=of aux7] (smc) {$smokes(c)$};
+		\node[latent,below=of aux6,xshift=-3cm] (friendsab) {$friends(a,b)$};
+		\node[latent,below=of aux7,xshift=3cm] (friendsac) {$friends(a,c)$};
+		\node[latent,below=of smb,xshift=2cm] (aux2) {$aux_2$};
+		\node[latent,below=of smc,xshift=2cm] (aux3) {$aux_3$};
+		\node[latent,below=of smb,xshift=-2cm] (aux4) {$aux_4$};
+		\node[latent,below=of smc,xshift=-2cm] (aux5) {$aux_5$};
+		\node[latent,below=of aux2,xshift=-0.5cm] (stb) {$stress(b)$};
+		\node[latent,below=of aux3,xshift=0cm] (stc) {$stress(c)$};
+		\node[latent,below=of aux4,xshift=0.5cm] (friendsbc) {$friends(b,c)$};
+		\node[latent,below=of aux5,xshift=1cm] (friendscb) {$friends(c,b)$};
+%		\node[latent] (pa) {$p(a)$};
+%		\node[latent] (pb) {$p(b)$};
+%		\node[latent] (pc) {$p(c)$};
+%		\node[latent] (pab) {$p(a,b)$};
+%		\node[latent] (pac) {$p(a,c)$};
+%		\node[latent] (pbc) {$p(b,c)$};
+%		\node[latent] (pcb) {$p(c,b)$};
+		
+		% Edges
+		\edge {aux1,aux6,aux7} {sma}
+		\edge {aux2,aux4} {smb}
+		\edge {aux3,aux5} {smc}
+		\edge {sta} {aux1}
+		\edge {stb} {aux2}
+		\edge {stc} {aux3}
+		\edge {friendsbc} {aux4}
+		%\edge {stc} {aux4}
+		\edge {friendscb,stb} {aux5}
+		\edge {friendsab,smb} {aux6}
+		\edge {friendsac,smc} {aux7}
+		\draw[->,shorten >=1pt] (stc) to [out=225,in=225,looseness=1.5] node[left]{$$} (aux4);
 
-\node[latent,below=of x,xshift=0cm] (c1) {$c_1$};
-\node[latent,below=of c1,xshift=0cm,fill] (sta) {$stress(a)$};
-\node[latent,below=of sta,fill] (pa) {$p_a$};
+		% Plates
+		% \plate [inner sep=.25cm,yshift=.2cm] {plate1} {(x)(y)(z)} {$N$}; %
 
-\node[latent,below=of x,xshift=6cm] (c2) {$c_2$};
-\node[latent,right=of x,xshift=10cm] (c3) {$c_3$};
-
-\node[latent,below=of c2,xshift=-2cm] (fab) {$friends(a,b)$};
-\node[latent,below=of c2,xshift=2cm] (sb) {$smokes(b)$};
-
-\node[latent,below=of c3,xshift=-2cm] (fac) {$friends(a,c)$};
-\node[latent,right=of sb,xshift=4cm] (sc) {$smokes(c)$};
-
-\node[latent,below=of sb,xshift=-2cm] (c4) {$c_4$};
-\node[latent,below=of sc,xshift=0cm] (c5) {$c_5$};
-
-\node[latent,below=of c4,xshift=0cm] (fbc) {$friends(b,c)$};
-\node[latent,below=of c5,xshift=0cm] (fcb) {$friends(c,b)$};
-
-\node[latent,below=of fab,xshift=0cm] (pfab) {$p_{a,b}$};
-\node[latent,below=of fbc,xshift=0cm] (pfbc) {$p_{b,c}$};
-\node[latent,below=of fac,xshift=0cm] (pfac) {$p_{a,c}$};
-\node[latent,below=of fcb,xshift=0cm] (pfcb) {$p_{c,b}$};
-
-\node[latent,left=of c5,xshift=-1cm] (c6) {$c6$};
-\node[latent,left=of c6,xshift=-1cm] (c7) {$c7$};
-
-\node[latent,below=of c6,xshift=0cm] (stb) {$stress(b)$};
-\node[latent,below=of c7,xshift=0cm] (stc) {$stress(c)$};
-
-\node[latent,below=of stb,xshift=0cm] (pb) {$p_b$};
-\node[latent,below=of stc,xshift=0cm] (pc) {$p_c$};
-
-%\node[latent,left=of c1,xshift=0cm] (pab) {$p(a,b)$};
-%\node[latent,right=of c2,xshift=0cm] (pac) {$p(a,c)$};
-%\node[latent,left=of c3,xshift=0cm] (pbc) {$p(b,c)$};
-%\node[latent,right=of c4,xshift=1cm] (pcb) {$p(c,b)$};
-
-% plate
-% \plate [inner sep=.25cm,yshift=.2cm] {plate1} {(x)(y)(z)} {$N$}; %
-% edges
-\edge {c1,c2,c3} {x}
-\edge {sta} {c1}
-\edge {pa} {sta}  
-\edge {fab,sb} {c2}  
-\edge {fac,sc} {c3}  
-\edge {c4} {sb}
-\edge {c5} {sc}
-\edge {fbc,c7} {c4}
-\edge {fcb,c6} {c5}
-\edge {pb} {stb}
-\edge {pc} {stc}
-\edge {pfab} {fab}
-\edge {pfbc} {fbc}
-\edge {pfac} {fac}
-\edge {pfcb} {fcb}
-\edge {stb} {c6}
-\edge {stc} {c7}
-\edge {c6} {sb}
-\edge {c7} {sc}
 \end{tikzpicture}
-\caption{Bayesian network representing the ground acyclic program.}
+\caption{Bayesian network corresponding to the ground acyclic program.}
 \label{fig:bayesian}
 \end{figure*}
 
