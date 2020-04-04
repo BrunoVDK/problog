@@ -308,7 +308,82 @@ $\lnot$p(c,b) & 0.6 \\
 \label{fig:bayesian}
 \end{figure*}
 
-A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probability tables (CPTs) for the nodes are the following :
+A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probability tables (CPTs) for the nodes are given below. Note that every table represents multiple identical tables in the network (like those of the $stress(a)$, $stress(b)$ and $stress(c)$ nodes for example).
+
+\begin{center}
+
+	% Stress, Friends
+	\begin{tabular}{c|cc|c}
+		& \underline{$stress(\{a,b,c\})$} & & \underline{$friends(\{a,b,c\},\{b,c\})$}\\
+		%\hline
+		$\top$ & 0.2 & $\top$ & 0.1 \\
+		$\bot$ & 0.8 & $\bot$ & 0.9
+	\end{tabular}
+	\vspace{0.5cm}\\
+	
+	% Auxiliary 1,2,3
+	\begin{tabular}{c|cc}
+		\underline{$stress(\{a,b,c\})$} & \multicolumn{2}{c}{\underline{$aux_{\{1,2,3\}}$}} \\
+		& $\top$ & $\bot$ \\
+		%\hline
+		$\top$ & 0.3 & 0.7 \\
+		$\bot$ & 0.0 & 1.0
+	\end{tabular}
+	\vspace{0.5cm}\\
+	
+	% Auxiliary 4,5
+	\begin{tabular}{cc|cc}
+		\underline{$friends(\{b,c\},\{c,b\})$} & \underline{$aux_{2,3}$} & \multicolumn{2}{c}{\underline{$aux_{4,5}$}} \\
+		& & $\top$ & $\bot$ \\
+		%\hline
+		$\top$ & $\top$ & 0.4 & 0.6 \\
+		$\top$ & $\bot$ & 0.0 & 1.0 \\
+		$\bot$ & $\top$ & 0.0 & 1.0 \\
+		$\bot$ & $\bot$ & 0.0 & 1.0 \\
+	\end{tabular}
+	\vspace{0.5cm}\\
+	
+	% Auxiliary 6,7
+	\begin{tabular}{cc|cc}
+		\underline{$friends(\{a\},\{b,c\})$} & \underline{$smokes(\{b,c\})$} & \multicolumn{2}{c}{\underline{$aux_{6,7}$}} \\
+		& & $\top$ & $\bot$ \\
+		%\hline
+		$\top$ & $\top$ & 0.4 & 0.6 \\
+		$\top$ & $\bot$ & 0.0 & 1.0 \\
+		$\bot$ & $\top$ & 0.0 & 1.0 \\
+		$\bot$ & $\bot$ & 0.0 & 1.0 \\
+	\end{tabular}
+	\vspace{0.5cm}\\
+	
+	% Smokes b,c
+	\begin{tabular}{cc|cc}
+		\underline{$aux_{4,5}$} & \underline{$aux_{2,3}$} & \multicolumn{2}{c}{\underline{$smokes(\{b,c\})$}} \\
+		& & $\top$ & $\bot$ \\
+		%\hline
+		$\top$ & $\top$ & 1.0 & 0.0 \\
+		$\top$ & $\bot$ & 0.0 & 1.0 \\
+		$\bot$ & $\top$ & 0.0 & 1.0 \\
+		$\bot$ & $\bot$ & 0.0 & 1.0 \\
+	\end{tabular}
+	\vspace{0.5cm}\\
+	
+	% Smokes b,c
+	\begin{tabular}{ccc|cc}
+		\underline{$aux_{1}$} & \underline{$smokes(b)$} & \underline{$smokes(c)$} & \multicolumn{2}{c}{\underline{$smokes(a)$}} \\
+		& & & $\top$ & $\bot$ \\
+		%\hline
+		$\top$ & $\top$ & $\top$ & 1.0 & 0.0 \\
+		$\top$ & $\top$ & $\bot$ & 0.0 & 1.0 \\
+		$\top$ & $\bot$ & $\top$ & 0.0 & 1.0 \\
+		$\top$ & $\bot$ & $\bot$ & 0.0 & 1.0 \\
+		$\bot$ & $\top$ & $\top$ & 0.0 & 1.0 \\
+		$\bot$ & $\top$ & $\bot$ & 0.0 & 1.0 \\
+		$\bot$ & $\bot$ & $\top$ & 0.0 & 1.0 \\
+		$\bot$ & $\bot$ & $\bot$ & 0.0 & 1.0 \\
+	\end{tabular}
+	\vspace{0.5cm}
+
+\end{center}
 
 %%%
 %%%
