@@ -295,10 +295,10 @@ $\lnot$p(c,b) & 0.6 \\
 		\edge {stc} {aux3}
 		\edge {friendsbc} {aux4}
 		%\edge {stc} {aux4}
-		\edge {friendscb,stb} {aux5}
+		\edge {friendscb,aux2} {aux5}
 		\edge {friendsab,smb} {aux6}
 		\edge {friendsac,smc} {aux7}
-		\draw[->,shorten >=1pt] (stc) to [out=225,in=225,looseness=1.5] node[left]{$$} (aux4);
+		\draw[->,shorten >=1pt] (aux3) to [out=-50,in=225,looseness=2] node[left]{$$} (aux4);
 
 		% Plates
 		% \plate [inner sep=.25cm,yshift=.2cm] {plate1} {(x)(y)(z)} {$N$}; %
