@@ -59,17 +59,46 @@
 
 \end{table}
 
-Querying for $smokes(a)$ can be done as follows :
-$$stress(a) \lor (\exists x: friends(a,x)\land \exists y:friends(x,y) \land stress(y))$$
-Rules can be applied to this formula though one has to keep in mind that the subformulae, in this case, are dependent. Applying the rules one by one gives the following results :
-$$rules$$
-The probabilities can now be looked up in the database itself, which gives :
-$$gives$$
-This is the same number as the one previously found by the weighted model counters.
+\noindent Querying for $smokes(a)$ can be done as follows :
+$$(stress(a)\ \land\ p(a))\ \lor\ (\exists x: p(a,x)\ \land\ friends(a,x)\ \land\ ((stress(x)\ \land\ p(x))\ \lor\ \exists y: p(x,y)\ \land\ friends(x,y)\ \land\ stress(y)\ \land\ p(y)))$$
+Rules can be applied to this formula. Applying the inclusive or rule gives :
+\begin{gather*}
+1-(1-p_{stress(a)\ \land\ p(a)})\times (1-p_{s_1})
+\end{gather*}
+Where $s_1$ refers to the subformula for the first existential operator. The probability $p_{s_1}$ cannot simply be calculated by exponentiation as the various instantiations of $s_1$ are dependent. However, there are only two such instantiations (for $smokes(a)$ and $smokes(b)$) and since the existential operator generalises the logical or, the formula for exclusive or can directly be used instead :
+\begin{gather*}
+p_{s_1} = p_{friends(a,b)}\times p_{p(a,b)}\times p_{smokes(b)} + p_{friends(a,c)}\times p_{p(a,c)}\times p_{smokes(c)} - p_{both}
+\end{gather*}
+Where $p_{both}=p_{friends(a,b)}\ \land\ p_{p(a,b)}\ \land\ p_{friends(a,c)}\ \land\ p_{p(a,c)}\ \land\ p_{smokes(b)}\ \land\ p_{smokes(c)}$. The probability of either $smokes(b)$ or $smokes(c)$ is the same (as is the probability of $friends(a,b)\ \land\ p(a,b)$ and $friends(a,c)\ \land\ p(a,c)$, so this reduces to :
+\begin{gather*}
+p_{s_1} = 2\times p_{friends(a,b)}\times p_{p(a,b)}\times p_{smokes(b)} - p_{friends(a,b)\ \land\  friends(a,c)\ \land\ smokes(b)\ \land\ smokes(c)}
+\end{gather*}
+The probability of $smokes(b)$ can be calculated using the same rules (an inclusive or and the and-rule) :
+\begin{gather*}
+1-(1-p_{stress(b)}\times p_{p(b)})\times (1-p_{friends(b,c)}\times p_{p(b,c)}\times p_{stress(c)}\times p_{p(c)})\\
+= (1-(1-0,2\times 0,3)\times (1-0,1\times 0,4\times 0,3\times 0,2)\\
+\approx 0.62256
+\end{gather*}
+The probability of $p_{smokes(b)\ \land\ smokes(c)}$ can also be calculated with these rules, possibly as follows :
+\begin{gather*}
+p_{smokes(b)\ \land\ smokes(c)} \\
+= p_{stress(b)\ \land\ p(b)\ \land\ smokes(c)} + p_{stress(c)\ \land\ p(c)\ \land\ smokes(b)} - p_{all}\\
+= 2\times p_{stress(b)}\times p_{p(b)}\times (p_{stress(c)\ \land\ p(c)}+p_{friends(b,c)\ \land\ p(b,c)}-p_{stress(c)\ \land\ p(c)\ \land\ friends(b,c)\ \land\ p(b,c)})\\
+- p_{stress(b)}\times p_{p(b)}\times p_{stress(c)}\times p_{p(c)}
+\end{gather*}
+And the probability of $p_{stress(a)\ \land\ p(a)}$ equals $p_{p(a)}\times p_{stress(a)}$.
+The probabilities of all involved literals can be looked up in the database itself to calculate the total probability :
+% 1-(1-0,2*0,3)*(1-(2*0,1*0,4*(1-(1-0,2*0,3)*(1-0,1*0,4*0,3*0,2))-0,1*0,4*0,4*0,1*(0,2*0,3*(0,2*0,3+0,1*0,4-0,2*0,3*0,1*0,4)+0,2*0,3*(0,2*0,3+0,1*0,4-0,2*0,3*0,1*0,4)-0,2*0,3*0,2*0,3)))
+\begin{gather*}
+1-(1-0,2\times 0,3)\times (1-(2\times 0,1\times 0,4\times (1-(1-0,2\times 0,3)\times (1-0,1\times 0,4\times 0,3\times 0,2))-\\
+0,1\times 0,4\times 0,1\times 0,4\times (0,2\times 0,3\times (0,2\times 0,3+0,1\times 0,4-0,2\times 0,3\times 0,1\times 0,4)+0,2\times 0,3\times\\ 
+(0,2\times 0,3+0,1\times 0,4-0,2\times 0,3\times 0,1\times 0,4)-0,2\times 0,3\times 0,2\times 0,3)))\\
+\approx 0,06466945075
+\end{gather*}This is the same number as the one previously found by the weighted model counters.
 
 \fakesubsection{Skolemization \& Noisy OR}
 
-A new encoding can be made by considering the very first CNF that was constructed. Instead of converting the formula $X\Leftrightarrow Y_1\lor Y_2 \lor ... \lor Y_n$ to CNF in the usual way, a Tseitin transformation is applied. This leads to :
+A new encoding can be made by, instead of converting the formula $X\Leftrightarrow Y_1\lor Y_2 \lor ... \lor Y_n$ to CNF in the usual way, applying a Tseitin transformation. This leads to :
 \begin{gather*}
 X \lor \lnot Y_1\\
 X \lor \lnot Y_2\\
