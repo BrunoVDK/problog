@@ -403,11 +403,13 @@ The Bayesian network can be encoded as a logical formula. Encodings ENC1 and ENC
 
 \noindent Since the noisy OR relations end up being encoded naively by considering each row of the CPT separately, a more compact encoding is obtained by replacing this part of the encoding with a one-liner. For example :
 $$smokes(a)\Leftrightarrow aux_1 \lor aux_6 \lor aux_7$$
-\noindent This can be converted to a \texttt{CNF} in the usual way :\\\par\noindent
-$(smokes(a) \lor \lnot aux_1\lor\lnot aux_6\lor\lnot aux_7)$\\
-$\land\ (\lnot smokes(a) \lor aux_1)$\\
-$\land\ (\lnot smokes(a) \lor aux_6)$\\
-$\land\ (\lnot smokes(a) \lor aux_7)$
+\noindent This can be converted to a \texttt{CNF} in the usual way :
+\begin{gather*}
+(smokes(a) \lor \lnot aux_1\lor\lnot aux_6\lor\lnot aux_7)\\
+\land\ (\lnot smokes(a) \lor aux_1)\\
+\land\ (\lnot smokes(a) \lor aux_6)\\
+\land\ (\lnot smokes(a) \lor aux_7)
+\end{gather*}
 
 \end{multicols*}
 
