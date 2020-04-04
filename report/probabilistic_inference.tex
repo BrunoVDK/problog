@@ -391,7 +391,7 @@ A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probab
 
 \fakesubsection{PGM to CNF}
 
-The Bayesian network can be encoded as a logical formula. Encodings ENC1 and ENC2 discussed \cite{chavira} both make use of the same indicator variables such as $\lambda_{stress(a)=true}$ and $\lambda_{stress(a)=false}$ (which introduces redundancy considering the fact that all network variables are boolean). \\
+The Bayesian network can be encoded as a logical formula. Encodings ENC1 and ENC2 discussed by Chavira \cite{chavira} both make use of the same indicator variables such as $\lambda_{stress(a)=true}$ and $\lambda_{stress(a)=false}$ (which introduces redundancy considering the fact that all network variables are boolean). \\
 
 \noindent In \texttt{ENC1} each row in each CPT is encoded by a parameter clause.\\
 \noindent In \texttt{ENC2} an order is assumed over each variable's values. Then, each row of each CPT is encoded by an equivalence.\\
@@ -438,7 +438,7 @@ Conversion from ProbLog & XXX & XXX & XXX\\
 \end{tabular}
 \end{center}
 
-\noindent To answer more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed, by dividing the joint probability of these three atoms by the probability of the previous query. One could also toy with the weights specified in the headers. Now for the results :
+\noindent To answer more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query. One could also toy with the weights specified in the headers. Now for the results :
 
 \begin{center}
 \begin{tabular}{cc|cc}
