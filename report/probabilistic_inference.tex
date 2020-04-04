@@ -316,11 +316,11 @@ A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probab
 \begin{center}
 
 	% Stress, Friends
-	\begin{tabular}{c|cc|c}
-		& \underline{$stress(\{a,b,c\})$} & & \underline{$friends(\{a,b,c\},\{b,c\})$}\\
+	\begin{tabular}{ccccc}
+		\multicolumn{2}{c}{\underline{$stress(\{a,b,c\})$}} & & \multicolumn{2}{c}{\underline{$friends(\{a,b,c\},\{b,c\})$}}\\
+		$\top$ & 0.2 & & $\top$ & 0.1\\
 		%\hline
-		$\top$ & 0.2 & $\top$ & 0.1 \\
-		$\bot$ & 0.8 & $\bot$ & 0.9
+		$\bot$ & 0.8 & & $\bot$ & 0.9 \\
 	\end{tabular}
 	\vspace{0.5cm}\\
 	
@@ -411,27 +411,40 @@ $$smokes(a)\Leftrightarrow aux_1 \lor aux_6 \lor aux_7$$
 \land\ (\lnot smokes(a) \lor aux_7)
 \end{gather*}
 
-\end{multicols*}
-
 %%%
 %%%
 %%%
 
 \fakesubsection{Weighted Model Counting}
 
-The previous paragraphs led to the construction of 5 different encodings. Weighted model counting was performed on all of them using either \texttt{PySDD} or \texttt{miniC2D}. A modified version of \texttt{Cachet} that allows for the specification of negative weights was toyed with too, though not for all encodings as it expects a different format for specifying the weights. These were the results :
+The previous paragraphs led to the construction of 5 different encodings. All of them lie in the \texttt{/src/bayesian/} folder, having the following file names :
 \begin{center}
-\begin{tabular}{cc|cc}
-Encoding & File location & \texttt{PySDD} & \texttt{miniC2D} \\\hline
-Conversion from ProbLog & \texttt{/src/bayesian/propositional.cnf} & XXX & XXX\\
-\texttt{ENC1} & \texttt{/src/bayesian/enc1.cnf} & XXX & XXX\\
-\texttt{ENC1} + noisy OR & \texttt{/src/bayesian/enc1\_noisy.cnf} & XXX & XXX\\
-\texttt{ENC2} & \texttt{/src/bayesian/enc2.cnf} & XXX & XXX\\
-\texttt{ENC2} + noisy OR & \texttt{/src/bayesian/enc2\_noisy.cnf} & XXX & XXX\\
+\begin{tabular}{cc}
+Encoding & Filename \\\hline
+Conversion from ProbLog & \texttt{propositional.cnf}\\
+\texttt{ENC1} & \texttt{enc1.cnf}\\
+\texttt{ENC1} + noisy OR & \texttt{enc1\_noisy.cnf}\\
+\texttt{ENC2} & \texttt{enc2.cnf}\\
+\texttt{ENC2} + noisy OR & \texttt{enc2\_noisy.cnf}\\
+\end{tabular}
+\end{center}
+\noindent Weighted model counting was performed on all of them using either \texttt{PySDD} or \texttt{miniC2D}. A modified version of \texttt{Cachet} that allows for the specification of negative weights was toyed with too, though not for all encodings as it expects a different format for specifying the weights. These were the results :
+\begin{center}
+\begin{tabular}{c|cc}
+Encoding & \texttt{PySDD} & \texttt{miniC2D} \\\hline
+Conversion from ProbLog & XXX & XXX\\
+\texttt{ENC1} & XXX & XXX\\
+\texttt{ENC1} + noisy OR & XXX & XXX\\
+\texttt{ENC2} & XXX & XXX\\
+\texttt{ENC2} + noisy OR & XXX & XXX\\
 \end{tabular}
 \end{center}
 
-\noindent The resulting counts can be interpreted as probabilities (keeping in mind that some assumptions result from the semantics of the ProbLog program, such as independence of friendships). In this particular case since no query was specified (yet), the probability equals 1 since the count represents the probability of any possible world.\\
+\noindent The counts can be interpreted as probabilities (keeping in mind that some assumptions result from the semantics of the ProbLog program, such as independence of friendships). In this particular case since no query was specified (yet), the probability equals 1 since the count represents the probability of any possible world.\\
+
+\par\noindent To answer a more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query. One could also toy with the weights of the literals. 
+
+\end{multicols*}
 
 \par\noindent The smallest circuit sizes were the following : 
 \begin{center}
@@ -445,8 +458,6 @@ Conversion from ProbLog & XXX & XXX & XXX\\
 \end{tabular}
 \end{center}
 
-\noindent To answer more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query. One could also toy with the weights specified in the headers. Now for the results :
-
 \begin{center}
 \begin{tabular}{cc|cc}
 Encoding & $P(smokes(a)=\top)$ & $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ \\\hline
@@ -459,3 +470,4 @@ Conversion from ProbLog & XXX & XXX\\
 \end{center}
 
 \par\noindent EXPLAIN DIFFERENCE BETWEEN MODEL COUNTERS HERE
+

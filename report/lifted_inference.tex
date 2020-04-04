@@ -6,7 +6,7 @@
 
 \fakesubsection{Calculating Probability with Probabilistic Databases}
 
-\noindent Given the following probabilistic database tables :
+\noindent Starting from the following probabilistic database tables :
 
 \begin{table}[h]
 
@@ -79,22 +79,22 @@ The probability of $smokes(b)$ can be calculated using the same rules (an inclus
 = (1-(1-0,2\times 0,3)\times (1-0,1\times 0,4\times 0,3\times 0,2)\\
 \approx 0.62256
 \end{gather*}
-The probability of $p_{smokes(b)\ \land\ smokes(c)}$ can also be calculated with these rules, possibly as follows :
+The probability of $p_{smokes(b)\ \land\ smokes(c)}$ can also be calculated with these rules, for example :
 \begin{gather*}
 p_{smokes(b)\ \land\ smokes(c)} \\
 = p_{stress(b)\ \land\ p(b)\ \land\ smokes(c)} + p_{stress(c)\ \land\ p(c)\ \land\ smokes(b)} - p_{all}\\
 = 2\times p_{stress(b)}\times p_{p(b)}\times (p_{stress(c)\ \land\ p(c)}+p_{friends(b,c)\ \land\ p(b,c)}-p_{stress(c)\ \land\ p(c)\ \land\ friends(b,c)\ \land\ p(b,c)})\\
 - p_{stress(b)}\times p_{p(b)}\times p_{stress(c)}\times p_{p(c)}
 \end{gather*}
-And the probability of $p_{stress(a)\ \land\ p(a)}$ equals $p_{p(a)}\times p_{stress(a)}$.
-The probabilities of all involved literals can be looked up in the database itself to calculate the total probability :
+The probability of $p_{stress(a)\ \land\ p(a)}$ equals $p_{p(a)}\times p_{stress(a)}$.
+After filling in all the missing probabilities of the involved literals (by looking them up in the database) the following total probability is obtained :
 % 1-(1-0,2*0,3)*(1-(2*0,1*0,4*(1-(1-0,2*0,3)*(1-0,1*0,4*0,3*0,2))-0,1*0,4*0,4*0,1*(0,2*0,3*(0,2*0,3+0,1*0,4-0,2*0,3*0,1*0,4)+0,2*0,3*(0,2*0,3+0,1*0,4-0,2*0,3*0,1*0,4)-0,2*0,3*0,2*0,3)))
 \begin{gather*}
 1-(1-0,2\times 0,3)\times (1-(2\times 0,1\times 0,4\times (1-(1-0,2\times 0,3)\times (1-0,1\times 0,4\times 0,3\times 0,2))-\\
 0,1\times 0,4\times 0,1\times 0,4\times (0,2\times 0,3\times (0,2\times 0,3+0,1\times 0,4-0,2\times 0,3\times 0,1\times 0,4)+0,2\times 0,3\times\\ 
 (0,2\times 0,3+0,1\times 0,4-0,2\times 0,3\times 0,1\times 0,4)-0,2\times 0,3\times 0,2\times 0,3)))\\
 \approx 0,06466945075
-\end{gather*}This is the same number as the one previously found by the weighted model counters.
+\end{gather*}This is the same number as the one previously found by the weighted model counters. Some symmetry was taken advantage of.
 
 \fakesubsection{Skolemization \& Noisy OR}
 

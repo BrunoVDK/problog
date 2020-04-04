@@ -94,7 +94,7 @@ contents={
 \maketitle
 \tableofcontents
 
-\vspace{0.2cm}
+\vspace{0cm}
 \begin{center}
 \begin{tikzpicture}
 \draw [dotted] (0,1) -- (15,1);
@@ -108,21 +108,21 @@ contents={
 \textit{Below's our solution for the given challenges. The questions in each section of the original assignment are answered in a section having the same title.}
 \end{center}
 
-\vspace{0.0cm}
-\begin{code}
-\begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
-person(a). 
-person(b). 
-person(c). 
-0.2::stress(X) :- person(X). 
-0.1::friends(X,Y) :- person(X), person(Y). 
-0.3::smokes(X) :- stress(X). 
-0.4::smokes(X) :- friends(X,Y), smokes(Y). 
-query(smokes(a)).
-\end{minted}
-\captionof{listing}{\texttt{PROBLOG} program used throughout the first two chapters of the report.}
-\label{code:base}
-\end{code}
+%\vspace{0.0cm}
+%\begin{code}
+%\begin{minted}[xleftmargin=20pt,linenos]{PROLOG}
+%person(a). 
+%person(b). 
+%person(c). 
+%0.2::stress(X) :- person(X). 
+%0.1::friends(X,Y) :- person(X), person(Y). 
+%0.3::smokes(X) :- stress(X). 
+%0.4::smokes(X) :- friends(X,Y), smokes(Y). 
+%query(smokes(a)).
+%\end{minted}
+%\captionof{listing}{\texttt{PROBLOG} program used throughout the first two chapters of the report.}
+%\label{code:base}
+%\end{code}
 
 \begin{center}
 \begin{tikzpicture}
@@ -160,6 +160,6 @@ query(smokes(a)).
 \newpage
 \bibliographystyle{plain}
 \bibliography{references}
-%\addcontentsline{toc}{section}{References}
+\addcontentsline{toc}{section}{References}
 
 \end{document}
