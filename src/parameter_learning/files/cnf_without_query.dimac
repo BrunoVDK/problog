@@ -1,0 +1,31 @@
+c weights 0.2 0.8 0.2 0.8 0.2 0.8 0.1411 0.8589 0.6461 0.3539 0.5647 0.4353 0.4088 0.5912 0.5933 0.40669999999999995 0.446 0.554 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+p cnf 16 10
+c ASSIGNMENTS: DIMACS_INT WEIGHT_TRUE WEIGHT_FALSE NAME
+c  1 0.20 0.80 stress(a)
+c  2 0.20 0.80 stress(b)
+c  3 0.20 0.80 stress(c)
+c  4 0.14 0.86 friends(a, b)
+c  5 0.65 0.35 friends(a, c)
+c  6 0.56 0.44 friends(b, a)
+c  7 0.41 0.59 friends(b, c)
+c  8 0.59 0.41 friends(c, a)
+c  9 0.45 0.55 friends(c, b)
+c 10 1.00 1.00 smokes(X)
+c 11 1.00 1.00 stress(X)
+c 12 1.00 1.00 friends(X, Y)
+c 13 1.00 1.00 smokes(Y)
+c 14 1.00 1.00 smokes(c)
+c 15 1.00 1.00 smokes(a)
+c 16 1.00 1.00 smokes(b)
+c QUERIES: 4, 5, 6, 7, 8, 9
+10 -11 0
+10 -12 -13 0
+-10 11 12 0
+-10 11 13 0
+c EVIDENCE:
+14 0
+1 0
+15 0
+-2 0
+16 0
+3 0
