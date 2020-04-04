@@ -83,7 +83,11 @@
 	\par\refstepcounter{subsection}
 	\addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}
 }
-
+\newcommand{\fakesubsubsection}[1]{
+	\subsubsection*{#1}
+	\par\refstepcounter{subsubsection}
+	\addcontentsline{toc}{subsubsection}{\protect\numberline{\thesubsubsection}#1}
+}
 
 \newtoks\authors
 \newtoks\academicyear
