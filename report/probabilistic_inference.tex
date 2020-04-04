@@ -391,14 +391,20 @@ A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probab
 
 \fakesubsection{PGM to CNF}
 
-The above Bayesian network can subsequently be encoded by a logical formula. Since it consists of nothing but boolean variables, indicator variables representing each value of each variable (e.g. $\lambda_{stress(a)=true}$ and $\lambda_{stress(a)=false})$ are not used in any of the DIMACS files corresponding to encodings presented below. This to avoid unnecessary cluttering. Instead just one atom is introduced for each network variable. This also makes the indicator clauses redundant.\\
+The Bayesian network can be encoded as a logical formula. Encodings ENC1 and ENC2 discussed \cite{chavira} both make use of the same indicator variables such as $\lambda_{stress(a)=true}$ and $\lambda_{stress(a)=false}$ (which introduces redundancy considering the fact that all network variables are boolean). \\
 
 \noindent In \texttt{ENC1} each row in each CPT is encoded by a parameter clause.\\
-
 \noindent In \texttt{ENC2} an order is assumed over each variable's values. Then, each row of each CPT is encoded by an equivalence.\\
 
-\noindent Encoding the deterministic noisy-OR makes either of these more compact. For example, the CPT of \texttt{smokes(a)} can be represented by the following one-liner : $$smokes(a)\Leftrightarrow aux_1 \lor aux_6 \lor aux_7$$
-\noindent 
+\noindent For both of these a Python script was written to automate the creation of CNF files, since manual conversion to a \texttt{CNF} turned out to be cumbersome. The script also produces \LaTeX output which is added to the appendix.\\
+
+\noindent Since the noisy OR relations end up being encoded naively by considering each row of the CPT separately, a more compact encoding is obtained by replacing this part of the encoding with a one-liner. For example :
+$$smokes(a)\Leftrightarrow aux_1 \lor aux_6 \lor aux_7$$
+\noindent This can be converted to a \texttt{CNF} in the usual way :\\\par\noindent
+$smokes(a) \lor \lnot aux_1\lor\lnot aux_6\lor\lnot aux_7$\\
+$\land (\lnot smokes(a) \lor aux_1)$\\
+$\land (\lnot smokes(a) \lor aux_6)$\\
+$\land (\lnot smokes(a) \lor aux_7)$
 
 %%%
 %%%
