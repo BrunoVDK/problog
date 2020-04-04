@@ -4,40 +4,78 @@
 %%%
 %%%
 
-\fakesubsectoin{Calculating Probability}
+\fakesubsection{Calculating Probability with Probabilistic Databases}
 
-Say we have the following probabilistic database tables :
+\noindent Given the following probabilistic database tables :
 
-\begin{center}
+\begin{table}[h]
 
-\begin{tabular}{c|c}
-	& $\underline{stress}\\
-	$a$ & 0.2\\
-	$b$ & 0.2\\
-	$c$ & 0.2\\
-\end{tabular}
+	\centering
+	
+	\begin{subtable}{.2\linewidth}{
+	\centering
+	\begin{tabular}{c|c}
+		& $\underline{stress}$\\
+		$a$ & 0.2\\
+		$b$ & 0.2\\
+		$c$ & 0.2
+	\end{tabular}}
+	\label{tab:1a}
+	\end{subtable}
+	\begin{subtable}{.2\linewidth}{
+	\begin{tabular}{cc|c}
+		& & $\underline{friends}$\\
+		$a$ & $b$ & 0.1\\
+		$a$ & $c$ & 0.1\\
+		$b$ & $c$ & 0.1\\
+		$c$ & $b$ & 0.1\\
+	\end{tabular}}
+	\label{tab:2a}
+	\end{subtable}
+	\begin{subtable}{.2\linewidth}{
+	\begin{tabular}{c|c}
+		& $\underline{p(X)}$\\
+		$a$ & 0.3\\
+		$b$ & 0.3\\
+		$c$ & 0.3\\
+	\end{tabular}}
+	\label{tab:3a}
+	\end{subtable}
+	\begin{subtable}{.2\linewidth}{
+	\begin{tabular}{cc|c}
+		& & $\underline{p(X,Y)}$\\
+		$a$ & $b$ & 0.4\\
+		$a$ & $c$ & 0.4\\
+		$b$ & $c$ & 0.4\\
+		$c$ & $b$ & 0.4\\
+	\end{tabular}}
+	\label{tab:4a}
+	\end{subtable}
 
-\begin{tabular}{cc|c}
-	& & $\underline{friends}\\
-	$a$ & $b$ & 0.1\\
-	$a$ & $c$ & 0.1\\
-	$b$ & $c$ & 0.1\\
-	$c$ & $b$ & 0.1\\
-\end{tabular}
+	\caption{Probabilistic database to be used for querying.}\label{tab:probdata}
 
-\begin{tabular}{c|c}
-	& $\underline{p(X)}\\
-	$a$ & 0.3\\
-	$b$ & 0.3\\
-	$c$ & 0.3\\
-\end{tabular}
+\end{table}
 
-\begin{tabular}{cc|c}
-	& & $\underline{p(X,Y)}\\
-	$a$ & $b$ & 0.4\\
-	$a$ & $c$ & 0.4\\
-	$b$ & $c$ & 0.4\\
-	$c$ & $b$ & 0.4\\
-\end{tabular}
+Querying for $smokes(a)$ can be done as follows :
+$$stress(a) \lor (\exists x: friends(a,x)\land \exists y:friends(x,y) \land stress(y))$$
+Rules can be applied to this formula though one has to keep in mind that the subformulae, in this case, are dependent. Applying the rules one by one gives the following results :
+$$rules$$
+The probabilities can now be looked up in the database itself, which gives :
+$$gives$$
+This is the same number as the one previously found by the weighted model counters.
 
-\end{center}
+\fakesubsection{Skolemization \& Noisy OR}
+
+A new encoding can be made by considering the very first CNF that was constructed. Instead of converting the formula $X\Leftrightarrow Y_1\lor Y_2 \lor ... \lor Y_n$ to CNF in the usual way, a Tseitin transformation is applied. This leads to :
+\begin{gather*}
+X \lor \lnot Y_1\\
+X \lor \lnot Y_2\\
+...\\
+X \lor \lnot Y_n\\
+X \lor T\\
+T \lor \lnot Y_1\\
+T \lor \lnot Y_2\\
+...\\
+T \lor \lnot Y_n
+\end{gather*}
+Applying this transformation to the noisy OR relations in the encoding lead to a slightly \textit{larger} circuit though, when tested with a program in which there were more ancestors, the resulting circuits were \textit{smaller}.

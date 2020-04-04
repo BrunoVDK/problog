@@ -9,6 +9,8 @@
   \usepackage{color}
 \usepackage{xcolor}
 \usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{amsfonts,dcolumn}
 \titleformat{\section}
   {\normalfont\Large}
   {\thesection}{1em}{}
@@ -47,7 +49,7 @@ contents={
   }{\end{algorithm}\vspace{0.3cm}}
 \usepackage{array}
 \usepackage{tabu}
-\usepackage{subfig}
+\usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{float}
 \usepackage[all]{hypcap}
@@ -128,9 +130,6 @@ query(smokes(a)).
 \end{tikzpicture}
 \end{center}
 
-\begin{multicols*}{2}
-\raggedcolumns
-
 %
 % Probabilistic Inference
 % 
@@ -145,8 +144,6 @@ query(smokes(a)).
 % Parameter Learning
 % 
 \input{parameter_learning}
-
-\end{multicols*}
 
 %
 % Appendix
