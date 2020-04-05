@@ -441,7 +441,7 @@ Conversion from ProbLog & XXX & XXX\\
 
 \noindent The counts can be interpreted as probabilities (keeping in mind that some assumptions result from the semantics of the ProbLog program, such as independence of friendships). In this particular case since no query was specified (yet), the probability equals 1 since the count represents the probability of any possible world.\\
 
-\par\noindent To answer a more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query (i.e. applying Bayes' formula). One could also toy with the weights of the literals. 
+\par\noindent To answer a more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query (i.e. applying Bayes' formula).
 
 \end{multicols*}
 
@@ -470,5 +470,4 @@ Conversion from ProbLog & XXX & XXX\\
 \end{tabular}
 \end{center}
 
-\par\noindent Both \texttt{miniC2D} and \texttt{PySDD} work with sentential decision diagrams (SDDs) since they are both made at UCLA. SDDs are a particular kind of d-DNNF with useful properties \cite{youtube}. The difference lies in the way these very SDDs are generated.
-
+\par\noindent Both \texttt{miniC2D} and \texttt{PySDD} work with sentential decision diagrams (SDDs) since they are both made at UCLA. SDDs are a particular kind of d-DNNF with useful properties \cite{youtube}. The difference lies in the way these very SDDs are generated. \texttt{miniC2D} is a top-down compiler.
