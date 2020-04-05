@@ -396,8 +396,7 @@ A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probab
 
 The Bayesian network can be encoded as a logical formula. Encodings ENC1 and ENC2 discussed by Chavira \cite{chavira} both make use of the same indicator variables such as $\lambda_{stress(a)=true}$ and $\lambda_{stress(a)=false}$ (which introduces redundancy considering the fact that all network variables are boolean). \\
 
-\noindent In \texttt{ENC1} each row in each CPT is encoded by a parameter clause.\\
-\noindent In \texttt{ENC2} an order is assumed over each variable's values. Then, each row of each CPT is encoded by an equivalence.\\
+\noindent In \texttt{ENC1} each row in each CPT is encoded with equivalences. In \texttt{ENC2} an order is assumed over each variable's values. Then, each row of each CPT is encoded with implications. All indicator variables get a weight of 1, the parameter variables are assigned weights corresponding to the values in the CPTs.\\
 
 \noindent For both of these a Python script was written to automate the creation of CNF files, since manual conversion to a \texttt{CNF} turned out to be cumbersome. The script also produces \LaTeX output which is added to the appendix.\\
 
@@ -442,11 +441,11 @@ Conversion from ProbLog & XXX & XXX\\
 
 \noindent The counts can be interpreted as probabilities (keeping in mind that some assumptions result from the semantics of the ProbLog program, such as independence of friendships). In this particular case since no query was specified (yet), the probability equals 1 since the count represents the probability of any possible world.\\
 
-\par\noindent To answer a more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query. One could also toy with the weights of the literals. 
+\par\noindent To answer a more complex query like $P(smokes(a)=\top)$ a line was added to the CNF files : $smokes(a)$.  This makes sure that any model is one where person $a$ actually smokes. A more complex query like $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ can be computed in the way Fierens proposed \cite{fierens}, by dividing the joint probability of these three atoms by the probability of the previous query (i.e. applying Bayes' formula). One could also toy with the weights of the literals. 
 
 \end{multicols*}
 
-\par\noindent The smallest circuit sizes were the following : 
+\par\noindent The smallest circuit sizes that were found are the following : 
 \begin{center}
 \begin{tabular}{cc|cc}
 Encoding & Hyperparameters & \texttt{PySDD} & \texttt{miniC2D} \\\hline
@@ -457,6 +456,8 @@ Conversion from ProbLog & XXX & XXX & XXX\\
 \texttt{ENC2} + noisy OR & XXX & XXX & XXX\\
 \end{tabular}
 \end{center}
+
+\par\noindent The weighted counts for the queries were :
 
 \begin{center}
 \begin{tabular}{cc|cc}
@@ -469,5 +470,5 @@ Conversion from ProbLog & XXX & XXX\\
 \end{tabular}
 \end{center}
 
-\par\noindent EXPLAIN DIFFERENCE BETWEEN MODEL COUNTERS HERE
+\par\noindent Both \texttt{miniC2D} and \texttt{PySDD} work with sentential decision diagrams (SDDs) since they are both made at UCLA. SDDs are a particular kind of d-DNNF with useful properties \cite{youtube}. The difference lies in the way these very SDDs are generated.
 
