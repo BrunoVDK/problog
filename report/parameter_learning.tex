@@ -6,7 +6,7 @@
 
 Learning from interpretations can be done by compiling these interpretations together with the base program into some kind of structure with which inference can be done faster. After creating d-DNNFs for each interpretation (SDDs in particular since SharpSAT had trouble with a known issue) the weights of the parameters of interest are updated iteratively until convergence, i.e. until new weights don't differ much from the previous ones. The resulting (local) optimum approximates the parameter's real values.\\
 
-\par\noindent The algorithm uses a hardcoded CNF encoding of the base program. Then, interpretations are looped through. Each is added as evidence to the base program and an SDD is compiled from the resulting CNF. Next, the unknown parameter weights are initialised randomly. Finally, while convergence hasn't been reached the SDDs are used to update the parameters (using the provided formula). The results are the following :
+\par\noindent The algorithm uses a CNF encoding of the base program. Then, interpretations are looped through. Each one is added as evidence to the base program and an SDD is compiled from the resulting CNF. Next, the unknown parameter weights are initialised randomly. Finally, while convergence hasn't been reached the SDDs are used to update the parameters (using the provided formula). The results are the following :
 
 \begin{table}[h]
 \centering
