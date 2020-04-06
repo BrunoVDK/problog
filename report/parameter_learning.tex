@@ -6,15 +6,47 @@
 
 Learning from interpretations can be done by compiling these interpretations together with the base program into some kind of structure such that inference becomes tractable. In the algorithm that was written, a d-DNNF is generated for each interpretation (an SDD in particular since SharpSAT had trouble with a known issue). Then, the weights of the parameters of interest are updated iteratively until convergence i.e. until new weights don't differ much from the previous ones. The resulting (local) optimum approximates the parameter's real values.\\
 
-\par\noindent The d-DNNFs are generated from CNFs with \texttt{PySDD}. During each iteration they are used to calculate marginals based on current values of the parameters. Their structure never changes, only their weights are updated as the algorithm progresses. Either because the new estimates have to be taken into account at the end of every iteration, or because the marginals have to be calculated (which is done by toying with the weights rather than by applying Bayes' theorem which was the approach used in section 1).\\
+\par\noindent The d-DNNFs are generated from CNFs with \texttt{PySDD}. During each iteration they are used to calculate marginals based on current values of the parameters. Their structure never changes, only their weights are updated as the algorithm progresses. Either because the new estimates have to be taken into account at the end of every iteration, or because the marginals have to be calculated (which is done by toying with the weights rather than applying Bayes' theorem which was the approach used in section 1).\\
+
+\par\noindent The CNFs are the CNF of the base program to which the evidence is added. The base program has cycles such that auxiliary variables have to be introduced in the same way as what was shown previously : 
+
+\begin{code}
+\begin{minted}[xleftmargin=2pt,linenos]{PROLOG}
+0.2::stress(a). 0.2::stress(b). 0.2::stress(c).
+0.5::friends(a,b). 0.5::friends(a,c). 0.5::friends(b,a). 
+0.5::friends(b,c). 0.5::friends(c,a). 0.5::friends(c,b).
+
+smokes(a) :- stress(a). smokes(a) :- friends(a,b), aux(a,b). smokes(a) :- friends(a,c), aux(a,c).
+smokes(b) :- stress(b). smokes(b) :- friends(b,a), aux(b,a). smokes(b) :- friends(b,c), aux(b,c).
+smokes(c) :- stress(c). smokes(c) :- friends(c,a), aux(c,a). smokes(c) :- friends(c,b), aux(c,b).
+
+aux(a,b) :- stress(b). aux(a,b) :- friends(b,c), stress(c).
+aux(a,c) :- stress(c). aux(a,c) :- friends(c,b), stress(b).
+
+aux(b,a) :- stress(a). aux(b,a) :- friends(a,c), stress(c).
+aux(b,c) :- stress(c). aux(b,c) :- friends(c,a), stress(a).
+
+aux(c,a) :- stress(a). aux(c,a) :- friends(a,b), stress(b).
+aux(c,b) :- stress(b). aux(c,b) :- friends(b,a), stress(a).
+\end{minted}
+\captionof{listing}{Cycle-free grounded program from which a CNF was generated. There's a total of 18 variables. The CNF contains 45 clauses. Rules of the form $a\Leftrightarrow b\ \land\ (c\ \lor\ d)$ and $a\Leftrightarrow b\ \land\ (c\ \lor\ d)\ \land\ (e\ \lor\ f)$ were directly converted to conjunctive clauses instead of creating new auxiliary variables.}
+\label{code:base}
+\vspace{0.5cm}
+\end{code}
 
 \par\noindent The algorithm is reasonably fast and some results are shown below :
 
 \begin{table}[h]
 \centering
-\begin{tabular}{ccc}
-& &\\\hline
+\begin{tabular}{ccc|cccccc}
+\# Examples & \# Iterations & Time (s) & \multicolumn{6}{c}{$friends(x,y)$}\\
+& & & $a,b$ & $a,c$ & $b,a$ & $b,c$ & $c,a$ & $c,b$\\\hline
+1 & 1000 & < 1 & 0.500 & 0.500 & 0.500 & 0.500 & 0.500 & 0.500 \\
+10 & 1000 & < 1 & 1.000 & 0.848 & 0.000 & 1.000 & 0.000 & 1.000 \\
+100 & 1000 & 4 & 0.604 & 0.621 & 0.305 & 1.000 & 0.281 & 1.000 \\
+300 & 1000 & 14 & 0.632 & 0.491 & 0.220 & 0.950 & 0.706 & 0.942 \\
+1000 & 1000 & 42 & 0.328 & 0.720 & 0.374 & 0.887 & 0.600 & 0.930 \\
 \end{tabular}
-\caption{Results of the parameter learning algorithm. Initial weights were always set to 0.5 for the sake of reproducibility (setting them randomly is a matter of commenting out a line). On a regular computer running for 1000 iterations on 1000 examples took no longer than a minute. Various tests were done such as comparing with ProbLog's own system, using the same initial values. }
+\caption{Results of the parameter learning algorithm. Initial weights were always set to 0.5 for the sake of reproducibility (setting them randomly is a matter of commenting out a line). On a regular computer running for 1000 iterations on 1000 examples took no longer than a minute. Various tests were done such as comparing with ProbLog's own system, using the same initial values. Or running on few examples with clear underlying parameter values. Only the test running on 1000 example deviates somewhat from ProbLog's response.}
 \label{plres}
 \end{table}
