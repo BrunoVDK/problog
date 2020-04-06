@@ -8,7 +8,7 @@ Learning from interpretations can be done by compiling these interpretations tog
 
 \par\noindent The d-DNNFs are generated from CNFs with \texttt{PySDD}. During each iteration they are used to calculate marginals based on current values of the parameters. Their structure never changes, only their weights are updated as the algorithm progresses. Either because the new estimates have to be taken into account at the end of every iteration, or because the marginals have to be calculated (which is done by toying with the weights rather than applying Bayes' theorem which was the approach used in section 1).\\
 
-\par\noindent The CNFs are the CNF of the base program to which the evidence is added. The base program has cycles such that auxiliary variables have to be introduced in the same way as what was shown previously : 
+\par\noindent The CNFs of the examples correspond to the CNF of the base program to which the evidence is added. Since the base program has cycles auxiliary variables have to be introduced : 
 
 \begin{code}
 \begin{minted}[xleftmargin=2pt,linenos]{PROLOG}
@@ -34,7 +34,7 @@ aux(c,b) :- stress(b). aux(c,b) :- friends(b,a), stress(a).
 \vspace{0.5cm}
 \end{code}
 
-\par\noindent Some results are shown below :
+\par\noindent Then - as shown previously - a CNF can be created. Some results are shown below :
 
 \begin{table}[h]
 \centering
