@@ -384,7 +384,6 @@ A Bayesian network is shown in figure \ref{fig:bayesian}. The conditional probab
 		$\bot$ & $\bot$ & $\top$ & 0.0 & 1.0 \\
 		$\bot$ & $\bot$ & $\bot$ & 0.0 & 1.0 \\
 	\end{tabular}
-	\vspace{0.5cm}
 
 \end{center}
 
@@ -427,7 +426,7 @@ Conversion from ProbLog & \texttt{propositional.cnf}\\
 \texttt{ENC2} + noisy OR & \texttt{enc2\_noisy.cnf}\\
 \end{tabular}
 \end{center}
-\noindent Weighted model counting was performed on all of them using either \texttt{PySDD} or \texttt{miniC2D}. A modified version of \texttt{Cachet} that allows for the specification of negative weights was toyed with too, though not for all encodings as it expects a different format for specifying the weights. These were the results :
+\noindent Weighted model counting was performed on all of them using either \texttt{PySDD} or \texttt{miniC2D}. A modified version of \texttt{Cachet} that allows for the specification of negative weights\footnote{Found on GitHub.} was toyed with too, though not for all encodings as it expects a different format for specifying the weights. These were the results :
 \begin{center}
 \begin{tabular}{c|cc}
 Encoding & \texttt{PySDD} & \texttt{miniC2D} \\\hline
@@ -470,4 +469,4 @@ Conversion from ProbLog & XXX & XXX\\
 \end{tabular}
 \end{center}
 
-\par\noindent Both \texttt{miniC2D} and \texttt{PySDD} work with sentential decision diagrams (SDDs) since they are both made at UCLA. SDDs are a particular kind of d-DNNF with useful properties \cite{youtube}. The difference lies in the way these very SDDs are generated. \texttt{miniC2D} is a top-down compiler.
+\par\noindent Both \texttt{miniC2D} and \texttt{PySDD} work with sentential decision diagrams (SDDs). SDDs are a particular kind of d-DNNF with useful properties \cite{youtube}. The difference lies in the way these very SDDs are generated. \texttt{PySDD} is a Python wrapper around the \texttt{SDD} package which is a bottom-up compiler that consider each clause of a CNF, compiles it and then combines the results using the \texttt{apply} operation. In contrast, \texttt{miniC2D} is a top-down compiler. It constructs Decision SDDs (DSDDs) starting from a CNF and a \textit{decision} vtree using an algorithm based on the DPLL algorithm (so instead of considering the clauses separately it considers the whole CNF), then minimises the result to obtain a (general) SDD.
