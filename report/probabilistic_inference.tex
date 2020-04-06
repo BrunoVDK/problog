@@ -430,11 +430,11 @@ Conversion from ProbLog & \texttt{propositional.cnf}\\
 \begin{center}
 \begin{tabular}{c|cc}
 Encoding & \texttt{PySDD} & \texttt{miniC2D} \\\hline
-Conversion from ProbLog & XXX & XXX\\
-\texttt{ENC1} & XXX & XXX\\
-\texttt{ENC1} + noisy OR & XXX & XXX\\
-\texttt{ENC2} & XXX & XXX\\
-\texttt{ENC2} + noisy OR & XXX & XXX\\
+Conversion from ProbLog & 1.0000 & 1.0000\\
+\texttt{ENC1} & 1.0000 & 1.0000\\
+\texttt{ENC1} + noisy OR & 1.0000 & 1.0000\\
+\texttt{ENC2} & 1.0000 & 1.0000\\
+\texttt{ENC2} + noisy OR & 1.0000 & 1.0000\\
 \end{tabular}
 \end{center}
 
@@ -444,28 +444,28 @@ Conversion from ProbLog & XXX & XXX\\
 
 \end{multicols*}
 
-\par\noindent The smallest circuit sizes that were found are the following : 
-\begin{center}
-\begin{tabular}{cc|cc}
-Encoding & Hyperparameters & \texttt{PySDD} & \texttt{miniC2D} \\\hline
-Conversion from ProbLog & XXX & XXX & XXX\\
-\texttt{ENC1} & XXX & XXX & XXX\\
-\texttt{ENC1} + noisy OR & XXX & XXX & XXX\\
-\texttt{ENC2} & XXX & XXX & XXX\\
-\texttt{ENC2} + noisy OR & XXX & XXX & XXX\\
-\end{tabular}
-\end{center}
-
-\par\noindent The weighted counts for the queries were :
-
+\par\noindent The weighted counts (computed with \texttt{PySDD}) for the queries were :
 \begin{center}
 \begin{tabular}{cc|cc}
 Encoding & $P(smokes(a)=\top)$ & $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ \\\hline
-Conversion from ProbLog & XXX & XXX\\
-\texttt{ENC1} & XXX & XXX\\
-\texttt{ENC1} + noisy OR & XXX & XXX\\
-\texttt{ENC2} & XXX & XXX\\
-\texttt{ENC2} + noisy OR & XXX & XXX\\
+Conversion from ProbLog & 0.064669451 & 0.105596467\\
+\texttt{ENC1} & 0.064669451 & 0.105596467\\
+\texttt{ENC1} + noisy OR & 0.064669451 & 0.105596467\\
+\texttt{ENC2} & 0.064669451 & 0.105596467\\
+\texttt{ENC2} + noisy OR & 0.064669451 & 0.105596467\\
+\end{tabular}
+\end{center}
+
+\par\noindent The smallest circuit sizes that were found are shown in the table below. While hyperparameters such as \texttt{SDD}'s \texttt{-t random} led to a smaller SDD size these results are ignored since they're not easy to reproduce. 
+\begin{center}
+\begin{tabular}{c|cc|cc}
+Encoding & \multicolumn{2}{c}{\texttt{PySDD}} & \multicolumn{2}{|c}{\texttt{miniC2D}} \\
+& Hyperparameters & SDD size & Hyperparameters & SDD size \\\hline
+Conversion from ProbLog & \texttt{-q -m -t left} & 36 & \texttt{XXX} & 1.0000 \\
+\texttt{ENC1} & \texttt{-q -t left} & 1413 & \texttt{XXX} &1.0000\\
+\texttt{ENC1} + noisy OR & \texttt{-q -t left} & \texttt{960} & 1.0000 & 1.0000\\
+\texttt{ENC2} & \texttt{-q -m -t left} & 228 & \texttt{XXX} & 1.0000\\
+\texttt{ENC2} + noisy OR & \texttt{-q -m -t left} & 178 & \texttt{XXX} & 1.0000\\
 \end{tabular}
 \end{center}
 
