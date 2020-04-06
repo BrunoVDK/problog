@@ -1,5 +1,0 @@
-To generate samples, jump to this directory and do :
-
-	problog sample tosample.pl --as-evidence -n 1000 > examples.pl
-
-Where 100 is the specified number of samples.

@@ -1,0 +1,22 @@
+This directory holds files used to compare ProbLog to our own algorithm.
+The results of running for a maximum of 1000 iterations on 1000 examples were the same.
+These were custom examples generated as follows :
+
+-------------
+
+To generate samples, jump to this directory and do :
+
+	problog sample tosample.pl --as-evidence -n 1000 > examples.pl
+
+Where 100 is the specified number of samples.
+
+-------------
+
+The model used for the test was the same as the provided base program where the parameters were specified as follows :
+
+0.1::friends(a,b).
+0.5::friends(a,c).
+0.1::friends(b,a).
+0.3::friends(b,c).
+0.5::friends(c,a).
+0.3::friends(c,b).
