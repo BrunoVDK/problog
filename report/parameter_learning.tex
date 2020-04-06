@@ -4,15 +4,17 @@
 %%%
 %%%
 
-Learning from interpretations can be done by compiling these interpretations together with the base program into some kind of structure such that inference becomes tractable. After creating d-DNNFs for each interpretation (SDDs in particular since SharpSAT had trouble with a known issue) the weights of the parameters of interest are updated iteratively until convergence, i.e. until new weights don't differ much from the previous ones. The resulting (local) optimum approximates the parameter's real values.\\
+Learning from interpretations can be done by compiling these interpretations together with the base program into some kind of structure such that inference becomes tractable. In the algorithm that was written, 7 d-DNNFs are generated for each interpretation (they're SDDs in particular since SharpSAT had trouble with a known issue). Then, the weights of the parameters of interest are updated iteratively until convergence i.e. until new weights don't differ much from the previous ones. The resulting (local) optimum approximates the parameter's real values.\\
 
-\par\noindent The algorithm uses a CNF encoding of the base program. Then, interpretations are looped through. Each one is added as evidence to the base program and an SDD is compiled from the resulting CNF. Next, the unknown parameter weights are initialised randomly. Finally, while convergence hasn't been reached the SDDs are used to update the parameters (using the provided formula). The results are the following :
+\par\noindent The seven d-DNNFs are generated from CNFs with PySDD. They include one for the evidence (the example) and then one for each query (the parameters that are to be learned). During each iteration these are used to calculate marginals based on current parameter values. Their structure never changes, only weights are updated as the algorithm progresses.\\
+
+\par\noindent This is not the optimal way to do it. Alternatively one would generate just one d-DNNF per interpretation and calculate all marginals in two passes through the d-DNNF. Still, the algorithm is reasonably fast and some results are shown below :
 
 \begin{table}[h]
 \centering
 \begin{tabular}{ccc}
 & &\\\hline
 \end{tabular}
-\caption{Results of the parameter learning algorithm.}
+\caption{Results of the parameter learning algorithm. On a regular computer running for 1000 iterations on 1000 examples took no longer than 4 minutes. Various tests were done such as comparing with ProbLog's own system, using the same initial values.}
 \label{plres}
 \end{table}
