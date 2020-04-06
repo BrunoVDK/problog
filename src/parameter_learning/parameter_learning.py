@@ -4,6 +4,9 @@ from builtins import open, list, len, map
 # PySDD imports (known issue with DSharp for macOS ...)
 from pysdd.sdd import SddManager, Vtree, WmcManager
 
+DATA_FILE = "data.pl" # DATA_FILE = "custom_data.pl"
+NB_EXAMPLES = 1000
+
 # CNF variables
 vars =	[
     "stress(a)", "stress(b)", "stress(c)",
@@ -16,7 +19,6 @@ weights =	[
     0.2, 0.8, 0.2, 0.8, 0.2, 0.8,
     1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
     0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
-    # if you use the weights above the probability of every smokes(X) should be 0.384 (for debugging purposes)
     # rands[0], 1-rands[0], rands[1], 1-rands[1], rands[2], 1-rands[2], rands[3], 1-rands[3], rands[4], 1-rands[4], rands[5], 1-rands[5],
     1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
 ]
@@ -112,7 +114,7 @@ w = wmc.propagate()
 print("Weighted model count: " + str(w))
 
 # Get interpretations
-interpretations = list(examples("data.pl", cap=10))
+interpretations = list(examples(DATA_FILE, cap=NB_EXAMPLES))
 
 # Generate SDD for each example
 counters = []
@@ -130,16 +132,16 @@ for interpretation in interpretations:
         wmc = sdd.wmc(log_mode=False)
         wmc.set_literal_weights_from_array(weights_array)
         wmcs[parameter] = wmc
-        print("Model count for example : " + str(wmc.propagate()))
+        # print("Model count for example : " + str(wmc.propagate()))
     (_, sdd) = SddManager.from_cnf_string(header_cnf + "\n" + "\n".join([str(p) + " 0" for p in interpretation]))
     wmc = sdd.wmc(log_mode=False)
     wmc.set_literal_weights_from_array(weights_array)
     counters.append((wmc, wmcs))
-    print("Model count for example : " + str(wmc.propagate()))
+    # print("Model count for example : " + str(wmc.propagate()))
 
 # EM algorithm
 iteration = 1
-max_iterations = 1000
+max_iterations = 2000
 weights = dict.fromkeys(parameters, 0.0)
 for i in range(0, max_iterations):
     delta = 0 # Maximum update of weights

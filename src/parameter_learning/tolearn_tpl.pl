@@ -4,12 +4,12 @@ person(a). person(b). person(c).
 0.2::stress(b).
 0.2::stress(c).
 
-t(_)::friends(a,b).
-t(_)::friends(a,c).
-t(_)::friends(b,a).
-t(_)::friends(b,c).
-t(_)::friends(c,a).
-t(_)::friends(c,b).
+t(0.5)::friends(a,b).
+t(0.5)::friends(a,c).
+t(0.5)::friends(b,a).
+t(0.5)::friends(b,c).
+t(0.5)::friends(c,a).
+t(0.5)::friends(c,b).
 
 
 smokes(X) :- stress(X).
