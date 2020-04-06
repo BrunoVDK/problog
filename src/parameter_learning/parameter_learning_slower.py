@@ -4,9 +4,8 @@ from builtins import open, list, len, map
 # PySDD imports (known issue with DSharp for macOS ...)
 from pysdd.sdd import SddManager, Vtree, WmcManager
 
-# Globals
-DATA_FILE = "data.pl"
-NB_EXAMPLES = 2000
+DATA_FILE = "data.pl" # DATA_FILE = "custom_data.pl"
+NB_EXAMPLES = 1000
 
 # CNF variables
 vars =	[
@@ -20,7 +19,6 @@ weights =	[
     0.2, 0.8, 0.2, 0.8, 0.2, 0.8,
     1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
     0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
-    # if you use the weights above the probability of every smokes(X) should be 0.384 (for debugging purposes)
     # rands[0], 1-rands[0], rands[1], 1-rands[1], rands[2], 1-rands[2], rands[3], 1-rands[3], rands[4], 1-rands[4], rands[5], 1-rands[5],
     1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,
 ]
@@ -113,7 +111,7 @@ cnf = "p cnf " + str(len(vars)) + " " + str(len(clauses)) + "\n" \
 wmc = sdd.wmc(log_mode=False)
 wmc.set_literal_weights_from_array(weights_array)
 w = wmc.propagate()
-# print("Weighted model count: " + str(w))
+print("Weighted model count: " + str(w))
 
 # Get interpretations
 interpretations = list(examples(DATA_FILE, cap=NB_EXAMPLES))
@@ -122,43 +120,51 @@ interpretations = list(examples(DATA_FILE, cap=NB_EXAMPLES))
 counters = []
 header_cnf = "p cnf " + str(len(vars)) + " " + str(len(clauses) + 6) + "\n" \
     + "\n".join(list(map(tostr, clauses)))
+header_query_cnf = "p cnf " + str(len(vars)) + " " + str(len(clauses) + 7) + "\n" \
+    + "\n".join(list(map(tostr, clauses)))
 for interpretation in interpretations:
+    wmcs = dict.fromkeys(parameters)
+    for parameter in parameters:
+        example_query_cnf = header_query_cnf + "\n" + \
+                            "\n".join([str(p) + " 0" for p in interpretation]) + \
+                            "\n" + str(parameter) + " 0"
+        (_, sdd) = SddManager.from_cnf_string(example_query_cnf)
+        wmc = sdd.wmc(log_mode=False)
+        wmc.set_literal_weights_from_array(weights_array)
+        wmcs[parameter] = wmc
+        # print("Model count for example : " + str(wmc.propagate()))
     (_, sdd) = SddManager.from_cnf_string(header_cnf + "\n" + "\n".join([str(p) + " 0" for p in interpretation]))
     wmc = sdd.wmc(log_mode=False)
     wmc.set_literal_weights_from_array(weights_array)
-    counters.append(wmc)
+    counters.append((wmc, wmcs))
     # print("Model count for example : " + str(wmc.propagate()))
 
 # EM algorithm
 iteration = 1
-max_iterations = 1000
+max_iterations = 2000
 weights = dict.fromkeys(parameters, 0.0)
 for i in range(0, max_iterations):
     delta = 0 # Maximum update of weights
     totals = dict.fromkeys(parameters, 0.0)
-    for wmc in counters:
+    for (wmc, wmcs) in counters:
         count_evidence = wmc.propagate()
         # print(count_evidence)
         for parameter in parameters:
-            # positive_weight = wmc.literal_weight(parameter)
-            negative_weight = wmc.literal_weight(-parameter)
-            # wmc.set_literal_weight(parameter, 1.0) # Assuming positive params
-            wmc.set_literal_weight(-parameter, 0.0)
-            count_evidence_query = wmc.propagate()
+            count_evidence_query = wmcs[parameter].propagate()
             # print(count_evidence_query)
-            if count_evidence > 0:
-                marginal = count_evidence_query / count_evidence
-                # print(marginal)
-                totals[parameter] += marginal
-            # wmc.set_literal_weight(parameter, positive_weight)
-            wmc.set_literal_weight(-parameter, negative_weight)
+            marginal = count_evidence_query / count_evidence
+            # print(marginal)
+            totals[parameter] += marginal
     for parameter in parameters:
         previous = weights[parameter]
-        weights[parameter] = totals[parameter] / len(counters)
+        weights[parameter] = totals[parameter] / len(interpretations)
         delta = max(delta, abs(previous - weights[parameter]))
-        for wmc in counters:
+        for (wmc, wmcs) in counters:
             wmc.set_literal_weight(parameter, weights[parameter])
             wmc.set_literal_weight(-parameter, 1.0 - weights[parameter])
+            for other in parameters:
+               wmcs[other].set_literal_weight(parameter, weights[parameter])
+               wmcs[other].set_literal_weight(-parameter, 1.0 - weights[parameter])
     if delta < np.finfo(float).eps:
         break
     iteration += 1
