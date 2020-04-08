@@ -415,7 +415,7 @@ $$smokes(a)\Leftrightarrow aux_1 \lor aux_6 \lor aux_7$$
 
 \fakesubsection{Weighted Model Counting}
 
-The previous paragraphs led to the construction of 5 different encodings. All of them lie in the \texttt{/src/bayesian/} folder, having the following file names :
+The previous paragraphs led to the construction of 5 different encodings. All of them lie in the \texttt{/src/encodings/} folder, having the following file names :
 \begin{center}
 \begin{tabular}{cc}
 Encoding & Filename \\\hline
@@ -444,7 +444,7 @@ Conversion from ProbLog & 1.0000 & 1.0000\\
 
 \end{multicols*}
 
-\par\noindent The weighted counts (computed with \texttt{PySDD}) for the queries were :
+\par\noindent The weighted counts (computed with \texttt{PySDD}) for the queries are :
 \begin{center}
 \begin{tabular}{cc|cc}
 Encoding & $P(smokes(a)=\top)$ & $P(smokes(a)=\top\ |\ friends(a,b)=\top,friends(a,c)=\top)$ \\\hline
